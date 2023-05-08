@@ -1,7 +1,7 @@
 #include <global.h>
 
 const char* BOARD_ID = "PalomoVF";
-const uint8_t VERSION = 3;
+const uint8_t VERSION = 4;
 
 const char* AP_SSID = "ESP32_AP";
 const char* AP_PWD = "12345678";
@@ -58,6 +58,10 @@ void setup() {
             Serial.println("Failed to connect to WiFi.");
         }
     }
+
+    // NTP init
+    Serial.println("NTP server: " + String(settings.wifi_ntp));
+    configTime(-10800, 0, settings.wifi_ntp);
 
     // Webserver init
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){

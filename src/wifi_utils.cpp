@@ -1,5 +1,15 @@
 #include "global.h"
 
+void syncLocalTime() {
+  struct tm timeinfo;
+  while (!getLocalTime(&timeinfo)) {
+    Serial.println("Failed to obtain time");
+    delay(1000);
+  }
+  Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
+}
+
+
 void fillIP(uint8_t *buffer, const String &ip) {
     IPAddress ip_addr;
     ip_addr.fromString(ip);

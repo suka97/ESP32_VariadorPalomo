@@ -37,5 +37,6 @@ void EEPROM_CreateSettings() {
     fillIP(settings.wifi_gateway, 0, 0, 0, 0);
     fillIP(settings.wifi_subnet, 255, 255, 255, 0);
     fillIP(settings.wifi_dns, 8, 8, 8, 8);
+    strcpy(settings.wifi_ntp, "time.google.com");
     EEPROM_WriteSettings(settings);
 }

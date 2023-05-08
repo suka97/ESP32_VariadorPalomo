@@ -21,6 +21,8 @@ struct EEPROM_Settings
     uint8_t wifi_subnet[4];
     uint8_t wifi_dns[4];
     char wifi_ntp[NTP_MAX_LENGTH];
+
+    
 };
 
 #endif
