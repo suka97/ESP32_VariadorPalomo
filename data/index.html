@@ -1,0 +1,80 @@
+<html>
+<head>
+  <title>ESP32 Web Server</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <div class="text-box">
+      <h1 id="title">CONGIGURACION</h1><hr>
+        <p id="description">Configurar los parametros basicos del equipo</p>
+    </div>
+  </header>
+      <div class="container">
+        <form id="survey-form" action="/save">
+  
+          <div class="labels">
+            <label for="wifi_ssid">WIFI SSID</label></div>
+          <div class="input-tab">
+            <input name="wifi_ssid" class="input-field" type="text" value="%wifi_ssid%" placeholder="" required></div>
+          
+          <div class="labels">
+            <label for="wifi_pass">WIFI PASS</label></div>
+          <div class="input-tab">
+            <input name="wifi_pass" class="input-field" type="text" value="%wifi_pass%" placeholder="" required></div>
+          
+          <div class="labels-checkbox">
+            <label for="wifi_ap">WIFI AP</label></div>
+          <div class="input-tab">
+            <input name="wifi_ap" type="checkbox" value="1" %wifi_ap%><br>
+          </div>
+
+          <div class="labels-checkbox">
+            <label for="wifi_dhcp">WIFI DHCP</label></div>
+          <div class="input-tab">
+            <input name="wifi_dhcp" type="checkbox" value="1" %wifi_dhcp%><br>
+          </div>
+
+          <div class="labels">
+            <label for="wifi_ip">WIFI IP</label></div>
+          <div class="input-tab">
+            <input name="wifi_ip" class="input-field" type="text" value="%wifi_ip%" placeholder="" required></div>
+
+          <div class="labels">
+            <label for="wifi_gateway">WIFI GATEWAY</label></div>
+          <div class="input-tab">
+            <input name="wifi_gateway" class="input-field" type="text" value="%wifi_gateway%" placeholder="" required></div>
+
+            <div class="labels">
+              <label for="wifi_subnet">WIFI SUBNET</label></div>
+            <div class="input-tab">
+              <input name="wifi_subnet" class="input-field" type="text" value="%wifi_subnet%" placeholder="" required></div>
+
+            <div class="labels">
+              <label for="wifi_dns">WIFI DNS</label></div>
+            <div class="input-tab">
+              <input name="wifi_dns" class="input-field" type="text" value="%wifi_dns%" placeholder="" required></div>
+              
+          <div class="labels">
+            <label for="wifi_ntp">NTP SERVER</label></div>
+          <div class="input-tab">
+            <input name="wifi_ntp" class="input-field" type="text" value="%wifi_ntp%" placeholder="" required></div>
+
+          <div class="btn">
+            <button name="submit" type="submit">Guardar Cambios</button>
+          </div>
+          
+        </form>
+      </div>
+  
+  <footer>
+        <p>&copy 2023 Andres Sukanec</a></p>
+  </footer>
+  
+
+</body>
+</html>
