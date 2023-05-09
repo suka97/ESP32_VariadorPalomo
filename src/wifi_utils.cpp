@@ -1,12 +1,27 @@
 #include "global.h"
 
+struct tm string2time(String time) {
+    struct tm timeinfo;
+    timeinfo.tm_hour = time.substring(0, 2).toInt();
+    timeinfo.tm_min = time.substring(3, 5).toInt();
+    timeinfo.tm_sec = time.substring(6, 8).toInt();
+    return timeinfo;
+}
+
+
+String time2string(struct tm timeinfo) {
+    char buffer[20];
+    sprintf(buffer, "%02d:%02d:%02d", timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+    return String(buffer);
+}
+
+
 void syncLocalTime() {
-  struct tm timeinfo;
   while (!getLocalTime(&timeinfo)) {
     Serial.println("Failed to obtain time");
     delay(1000);
   }
-  Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
+  Serial.println(time2string(timeinfo));
 }
 
 
@@ -50,33 +65,6 @@ String htmlProcessor(const String& var){
     if ( var == "wifi_subnet" ) return IPAddress(settings.wifi_subnet).toString();
     if ( var == "wifi_dns" ) return IPAddress(settings.wifi_dns).toString();
     if ( var == "wifi_ntp" ) return settings.wifi_ntp;
+    if ( var.startsWith("vf") ) Serial.println( var + ": " + getVfHtml(var) );
     return String();
 }
-
-
-// void handle_setup() {
-//   String s = "<html><body>";
-//   s += "<form method='post'>";
-//   s += "SSID: <input type='text' name='ssid'><br>";
-//   s += "Password: <input type='password' name='password'><br>";
-//   s += "<input type='submit' value='Submit'>";
-//   s += "</form></body></html>";
-
-//   server.send(200, "text/html", s);
-//   if (server.method() == HTTP_POST) {
-//     String ssid = server.arg("ssid");
-//     String password = server.arg("password");
-
-//     // Write SSID and password to EEPROM
-//     EEPROM.begin(EEPROM_SIZE);
-//     EEPROM.put(0, ssid);
-//     EEPROM.put(SSID_MAX_LENGTH, password);
-//     EEPROM.commit();
-//     EEPROM.end();
-
-//     server.sendHeader("Location", "/");
-//     server.send(302);
-//     delay(1000);
-//     ESP.restart();
-//   }
-// }

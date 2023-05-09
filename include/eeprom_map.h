@@ -6,6 +6,17 @@
 #define PASSWORD_MAX_LENGTH 32
 #define NTP_MAX_LENGTH 32
 #define IP_MAX_CHAR_LENGTH 16
+#define VF_PROFILES_MAX 4
+
+struct VF_Profile
+{
+    bool enabled;
+    float rel_temp2vel;
+    float vel0;
+    struct tm time_start;
+    struct tm time_end;
+};
+
 
 struct EEPROM_Settings
 {
@@ -22,7 +33,7 @@ struct EEPROM_Settings
     uint8_t wifi_dns[4];
     char wifi_ntp[NTP_MAX_LENGTH];
 
-    
+    VF_Profile vf_profiles[VF_PROFILES_MAX];
 };
 
 #endif

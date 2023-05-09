@@ -1,13 +1,14 @@
 #include <global.h>
 
 const char* BOARD_ID = "PalomoVF";
-const uint8_t VERSION = 4;
+const uint8_t VERSION = 5;
 
 const char* AP_SSID = "ESP32_AP";
 const char* AP_PWD = "12345678";
 
 EEPROM_Settings settings;
 AsyncWebServer server(80);
+struct tm timeinfo;
 
 
 void setup() {
@@ -24,6 +25,8 @@ void setup() {
     EEPROM_Begin();
     EEPROM_ReadSettings();
     Serial.println("Board ID: " + String(settings.board_id) + ", version: " + String(settings.version));
+    Serial.println(settings.vf_profiles[0].rel_temp2vel);
+    Serial.println(settings.wifi_ntp);
     if( strcmp(settings.board_id, BOARD_ID) != 0 || settings.version != VERSION ) {
         Serial.println("Settings not found or invalid. Creating new settings...");
         EEPROM_CreateSettings();
@@ -62,6 +65,7 @@ void setup() {
     // NTP init
     Serial.println("NTP server: " + String(settings.wifi_ntp));
     configTime(-10800, 0, settings.wifi_ntp);
+    syncLocalTime();
 
     // Webserver init
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -96,12 +100,15 @@ void setup() {
         Serial.println("wifi_dns: " + IPAddress(new_sett.wifi_dns).toString());
         Serial.println("wifi_ntp: " + String(new_sett.wifi_ntp));
 
+        vf_getSettings(new_sett, request);
+        Serial.println(new_sett.vf_profiles[0].rel_temp2vel);
+
         request->send(SPIFFS, "/reset.html", String(), false, htmlProcessor);
         Serial.println("Saving new settings...");
         EEPROM_WriteSettings(new_sett);
         Serial.println("Restarting...");
         delay(1000);
-        ESP.restart();
+        // ESP.restart();
     });
     server.begin();
 }
@@ -109,5 +116,15 @@ void setup() {
 
 
 void loop() {
-    
+    getLocalTime(&timeinfo);
+
+    // int prof_index = getProfileForTime(settings.vf_profiles, timeinfo);
+    // if ( prof_index == -1 ) {
+    //     Serial.println("No profile found for current time");
+    //     delay(1000);
+    //     return;
+    // }
+
+    // Serial.println("Profile found: " + String(prof_index));
+    // delay(1000);
 }

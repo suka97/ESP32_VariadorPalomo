@@ -14,62 +14,101 @@
         <p id="description">Configurar los parametros basicos del equipo</p>
     </div>
   </header>
-      <div class="container">
-        <form id="survey-form" action="/save">
-  
+      <form id="survey-form" action="/save">
+
+        <!-- ########## WIFI SETTINGS ########## -->
+        <div class="container">
+
+        <div class="labels">
+          <label for="wifi_ssid">WIFI SSID</label></div>
+        <div class="input-tab">
+          <input name="wifi_ssid" class="input-field" type="text" value="%wifi_ssid%" placeholder="" required></div>
+        
+        <div class="labels">
+          <label for="wifi_pass">WIFI PASS</label></div>
+        <div class="input-tab">
+          <input name="wifi_pass" class="input-field" type="text" value="%wifi_pass%" placeholder="" required></div>
+        
+        <div class="labels-checkbox">
+          <label for="wifi_ap">WIFI AP</label></div>
+        <div class="input-tab">
+          <input name="wifi_ap" type="checkbox" value="1" %wifi_ap%><br>
+        </div>
+
+        <div class="labels-checkbox">
+          <label for="wifi_dhcp">WIFI DHCP</label></div>
+        <div class="input-tab">
+          <input name="wifi_dhcp" type="checkbox" value="1" %wifi_dhcp%><br>
+        </div>
+
+        <div class="labels">
+          <label for="wifi_ip">WIFI IP</label></div>
+        <div class="input-tab">
+          <input name="wifi_ip" class="input-field" type="text" value="%wifi_ip%" placeholder="" required></div>
+
+        <div class="labels">
+          <label for="wifi_gateway">WIFI GATEWAY</label></div>
+        <div class="input-tab">
+          <input name="wifi_gateway" class="input-field" type="text" value="%wifi_gateway%" placeholder="" required></div>
+
           <div class="labels">
-            <label for="wifi_ssid">WIFI SSID</label></div>
+            <label for="wifi_subnet">WIFI SUBNET</label></div>
           <div class="input-tab">
-            <input name="wifi_ssid" class="input-field" type="text" value="%wifi_ssid%" placeholder="" required></div>
-          
+            <input name="wifi_subnet" class="input-field" type="text" value="%wifi_subnet%" placeholder="" required></div>
+
           <div class="labels">
-            <label for="wifi_pass">WIFI PASS</label></div>
+            <label for="wifi_dns">WIFI DNS</label></div>
           <div class="input-tab">
-            <input name="wifi_pass" class="input-field" type="text" value="%wifi_pass%" placeholder="" required></div>
-          
+            <input name="wifi_dns" class="input-field" type="text" value="%wifi_dns%" placeholder="" required></div>
+            
+        <div class="labels">
+          <label for="wifi_ntp">NTP SERVER</label></div>
+        <div class="input-tab">
+          <input name="wifi_ntp" class="input-field" type="text" value="%wifi_ntp%" placeholder="" required></div>
+
+        <div class="btn">
+          <button name="submit" type="submit">Guardar Cambios</button>
+        </div>
+        
+        </div>
+        <!-- ############################## -->
+
+        <br>
+        <!-- ########## Profile 1 Settings ########## -->
+        <div class="container">
+
           <div class="labels-checkbox">
-            <label for="wifi_ap">WIFI AP</label></div>
+            <label for="vf0-enabled">ENABLED</label></div>
           <div class="input-tab">
-            <input name="wifi_ap" type="checkbox" value="1" %wifi_ap%><br>
+            <input name="vf0-enabled" type="checkbox" value="1" %vf0-enabled%><br>
           </div>
 
-          <div class="labels-checkbox">
-            <label for="wifi_dhcp">WIFI DHCP</label></div>
-          <div class="input-tab">
-            <input name="wifi_dhcp" type="checkbox" value="1" %wifi_dhcp%><br>
-          </div>
-
           <div class="labels">
-            <label for="wifi_ip">WIFI IP</label></div>
+            <label for="vf0-rel_temp2vel">RELACION TEMPERATURA A VELOCIDAD</label></div>
           <div class="input-tab">
-            <input name="wifi_ip" class="input-field" type="text" value="%wifi_ip%" placeholder="" required></div>
-
-          <div class="labels">
-            <label for="wifi_gateway">WIFI GATEWAY</label></div>
-          <div class="input-tab">
-            <input name="wifi_gateway" class="input-field" type="text" value="%wifi_gateway%" placeholder="" required></div>
-
+            <input name="vf0-rel_temp2vel" class="input-field" type="number" value="%vf0-temp2vel%" placeholder="" required></div>
+        
             <div class="labels">
-              <label for="wifi_subnet">WIFI SUBNET</label></div>
+              <label for="vf0-vel0">VELOCIDAD INICIAL</label></div>
             <div class="input-tab">
-              <input name="wifi_subnet" class="input-field" type="text" value="%wifi_subnet%" placeholder="" required></div>
-
+              <input name="vf0-vel0" class="input-field" type="number" value="%vf0-vel0%" placeholder="" required></div>
+          
             <div class="labels">
-              <label for="wifi_dns">WIFI DNS</label></div>
+              <label for="vf0-time_start">TIEMPO INICIO</label></div>
             <div class="input-tab">
-              <input name="wifi_dns" class="input-field" type="text" value="%wifi_dns%" placeholder="" required></div>
+              <input name="vf0-time_start" class="input-field" type="text" value="%vf0-time_start%" placeholder="" required></div>
+            
               
-          <div class="labels">
-            <label for="wifi_ntp">NTP SERVER</label></div>
-          <div class="input-tab">
-            <input name="wifi_ntp" class="input-field" type="text" value="%wifi_ntp%" placeholder="" required></div>
+            <div class="labels">
+              <label for="vf0-time_end">TIEMPO FIN</label></div>
+            <div class="input-tab">
+              <input name="vf0-time_end" class="input-field" type="text" value="%vf0-time_end%" placeholder="" required></div>
 
-          <div class="btn">
-            <button name="submit" type="submit">Guardar Cambios</button>
           </div>
-          
-        </form>
-      </div>
+          <!-- ############################## -->
+
+      </form>
+      
   
   <footer>
         <p>&copy 2023 Andres Sukanec</a></p>

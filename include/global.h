@@ -1,3 +1,6 @@
+#ifndef GLOBAL_H
+#define GLOBAL_H
+
 #include <Arduino.h>
 #include <stdint.h>
 #include <WiFi.h>
@@ -9,6 +12,7 @@
 #include "wifi_utils.h"
 #include "eeprom_utils.h"
 #include "eeprom_map.h"
+#include "prog_utils.h"
 
 #define EEPROM_SIZE 512
 
@@ -20,3 +24,6 @@ extern const char* AP_PWD;
 
 extern EEPROM_Settings settings;
 extern AsyncWebServer server;
+extern struct tm timeinfo;
+
+#endif
