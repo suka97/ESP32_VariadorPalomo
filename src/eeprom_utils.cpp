@@ -27,8 +27,9 @@ void EEPROM_Begin() {
 }
 
 void EEPROM_CreateSettings() {
-    // strcpy(settings.board_id, BOARD_ID);
-    // settings.version = VERSION;
+    strcpy(settings.board_id, BOARD_ID);
+    settings.version = VERSION;
+
     // strcpy(settings.wifi_ssid, "");
     // strcpy(settings.wifi_pass, "");
     // settings.wifi_ap = true;
@@ -38,6 +39,7 @@ void EEPROM_CreateSettings() {
     // fillIP(settings.wifi_subnet, 255, 255, 255, 0);
     // fillIP(settings.wifi_dns, 8, 8, 8, 8);
     // strcpy(settings.wifi_ntp, "time.google.com");
+    
     for ( uint8_t i=0 ; i<VF_PROFILES_MAX ; i++ ) {
         settings.vf_profiles[i].enabled = false;
         settings.vf_profiles[i].rel_temp2vel = 0;

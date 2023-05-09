@@ -18,6 +18,7 @@
 
         <!-- ########## WIFI SETTINGS ########## -->
         <div class="container">
+          <p id="description">Configuracion WIFI</p>
 
         <div class="labels">
           <label for="wifi_ssid">WIFI SSID</label></div>
@@ -65,17 +66,14 @@
           <label for="wifi_ntp">NTP SERVER</label></div>
         <div class="input-tab">
           <input name="wifi_ntp" class="input-field" type="text" value="%wifi_ntp%" placeholder="" required></div>
-
-        <div class="btn">
-          <button name="submit" type="submit">Guardar Cambios</button>
-        </div>
         
         </div>
         <!-- ############################## -->
 
         <br>
-        <!-- ########## Profile 1 Settings ########## -->
+        <!-- ########## Profile 0 Settings ########## -->
         <div class="container">
+          <p id="description">Configuracion PERFIL 0</p>
 
           <div class="labels-checkbox">
             <label for="vf0-enabled">ENABLED</label></div>
@@ -86,7 +84,7 @@
           <div class="labels">
             <label for="vf0-rel_temp2vel">RELACION TEMPERATURA A VELOCIDAD</label></div>
           <div class="input-tab">
-            <input name="vf0-rel_temp2vel" class="input-field" type="number" value="%vf0-temp2vel%" placeholder="" required></div>
+            <input name="vf0-rel_temp2vel" class="input-field" type="number" value="%vf0-rel_temp2vel%" placeholder="" required></div>
         
             <div class="labels">
               <label for="vf0-vel0">VELOCIDAD INICIAL</label></div>
@@ -96,17 +94,130 @@
             <div class="labels">
               <label for="vf0-time_start">TIEMPO INICIO</label></div>
             <div class="input-tab">
-              <input name="vf0-time_start" class="input-field" type="text" value="%vf0-time_start%" placeholder="" required></div>
+              <input name="vf0-time_start" class="input-field" type="time" value="%vf0-time_start%" placeholder="" required></div>
             
               
             <div class="labels">
               <label for="vf0-time_end">TIEMPO FIN</label></div>
             <div class="input-tab">
-              <input name="vf0-time_end" class="input-field" type="text" value="%vf0-time_end%" placeholder="" required></div>
+              <input name="vf0-time_end" class="input-field" type="time" value="%vf0-time_end%" placeholder="" required></div>
 
           </div>
           <!-- ############################## -->
 
+
+          <br>
+        <!-- ########## Profile 1 Settings ########## -->
+        <div class="container">
+          <p id="description">Configuracion PERFIL 1</p>
+
+          <div class="labels-checkbox">
+            <label for="vf1-enabled">ENABLED</label></div>
+          <div class="input-tab">
+            <input name="vf1-enabled" type="checkbox" value="1" %vf1-enabled%><br>
+          </div>
+
+          <div class="labels">
+            <label for="vf1-rel_temp2vel">RELACION TEMPERATURA A VELOCIDAD</label></div>
+          <div class="input-tab">
+            <input name="vf1-rel_temp2vel" class="input-field" type="number" value="%vf1-rel_temp2vel%" placeholder="" required></div>
+        
+            <div class="labels">
+              <label for="vf1-vel0">VELOCIDAD INICIAL</label></div>
+            <div class="input-tab">
+              <input name="vf1-vel0" class="input-field" type="number" value="%vf1-vel0%" placeholder="" required></div>
+          
+            <div class="labels">
+              <label for="vf1-time_start">TIEMPO INICIO</label></div>
+            <div class="input-tab">
+              <input name="vf1-time_start" class="input-field" type="time" value="%vf1-time_start%" placeholder="" required></div>
+            
+              
+            <div class="labels">
+              <label for="vf1-time_end">TIEMPO FIN</label></div>
+            <div class="input-tab">
+              <input name="vf1-time_end" class="input-field" type="time" value="%vf1-time_end%" placeholder="" required></div>
+
+          </div>
+          <!-- ############################## -->
+
+
+          <br>
+        <!-- ########## Profile 2 Settings ########## -->
+        <div class="container">
+          <p id="description">Configuracion PERFIL 2</p>
+
+          <div class="labels-checkbox">
+            <label for="vf2-enabled">ENABLED</label></div>
+          <div class="input-tab">
+            <input name="vf2-enabled" type="checkbox" value="1" %vf2-enabled%><br>
+          </div>
+
+          <div class="labels">
+            <label for="vf2-rel_temp2vel">RELACION TEMPERATURA A VELOCIDAD</label></div>
+          <div class="input-tab">
+            <input name="vf2-rel_temp2vel" class="input-field" type="number" value="%vf2-rel_temp2vel%" placeholder="" required></div>
+        
+            <div class="labels">
+              <label for="vf2-vel0">VELOCIDAD INICIAL</label></div>
+            <div class="input-tab">
+              <input name="vf2-vel0" class="input-field" type="number" value="%vf2-vel0%" placeholder="" required></div>
+          
+            <div class="labels">
+              <label for="vf2-time_start">TIEMPO INICIO</label></div>
+            <div class="input-tab">
+              <input name="vf2-time_start" class="input-field" type="time" value="%vf2-time_start%" placeholder="" required></div>
+            
+              
+            <div class="labels">
+              <label for="vf2-time_end">TIEMPO FIN</label></div>
+            <div class="input-tab">
+              <input name="vf2-time_end" class="input-field" type="time" value="%vf2-time_end%" placeholder="" required></div>
+
+          </div>
+          <!-- ############################## -->
+
+
+          <br>
+        <!-- ########## Profile 3 Settings ########## -->
+        <div class="container">
+          <p id="description">Configuracion PERFIL 3</p>
+
+          <div class="labels-checkbox">
+            <label for="vf3-enabled">ENABLED</label></div>
+          <div class="input-tab">
+            <input name="vf3-enabled" type="checkbox" value="1" %vf3-enabled%><br>
+          </div>
+
+          <div class="labels">
+            <label for="vf3-rel_temp2vel">RELACION TEMPERATURA A VELOCIDAD</label></div>
+          <div class="input-tab">
+            <input name="vf3-rel_temp2vel" class="input-field" type="number" value="%vf3-rel_temp2vel%" placeholder="" required></div>
+        
+            <div class="labels">
+              <label for="vf3-vel0">VELOCIDAD INICIAL</label></div>
+            <div class="input-tab">
+              <input name="vf3-vel0" class="input-field" type="number" value="%vf3-vel0%" placeholder="" required></div>
+          
+            <div class="labels">
+              <label for="vf3-time_start">TIEMPO INICIO</label></div>
+            <div class="input-tab">
+              <input name="vf3-time_start" class="input-field" type="time" value="%vf3-time_start%" placeholder="" required></div>
+            
+              
+            <div class="labels">
+              <label for="vf3-time_end">TIEMPO FIN</label></div>
+            <div class="input-tab">
+              <input name="vf3-time_end" class="input-field" type="time" value="%vf3-time_end%" placeholder="" required></div>
+
+          </div>
+          <!-- ############################## -->
+
+
+          <br>
+          <div class="btn">
+            <button name="submit" type="submit">Guardar Cambios</button>
+          </div>
       </form>
       
   

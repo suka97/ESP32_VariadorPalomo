@@ -4,14 +4,13 @@ struct tm string2time(String time) {
     struct tm timeinfo;
     timeinfo.tm_hour = time.substring(0, 2).toInt();
     timeinfo.tm_min = time.substring(3, 5).toInt();
-    timeinfo.tm_sec = time.substring(6, 8).toInt();
     return timeinfo;
 }
 
 
 String time2string(struct tm timeinfo) {
-    char buffer[20];
-    sprintf(buffer, "%02d:%02d:%02d", timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+    char buffer[10];
+    sprintf(buffer, "%02d:%02d", timeinfo.tm_hour, timeinfo.tm_min);
     return String(buffer);
 }
 
@@ -65,6 +64,6 @@ String htmlProcessor(const String& var){
     if ( var == "wifi_subnet" ) return IPAddress(settings.wifi_subnet).toString();
     if ( var == "wifi_dns" ) return IPAddress(settings.wifi_dns).toString();
     if ( var == "wifi_ntp" ) return settings.wifi_ntp;
-    if ( var.startsWith("vf") ) Serial.println( var + ": " + getVfHtml(var) );
+    if ( var.startsWith("vf") ) return getVfHtml(var);
     return String();
 }

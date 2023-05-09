@@ -25,8 +25,6 @@ void setup() {
     EEPROM_Begin();
     EEPROM_ReadSettings();
     Serial.println("Board ID: " + String(settings.board_id) + ", version: " + String(settings.version));
-    Serial.println(settings.vf_profiles[0].rel_temp2vel);
-    Serial.println(settings.wifi_ntp);
     if( strcmp(settings.board_id, BOARD_ID) != 0 || settings.version != VERSION ) {
         Serial.println("Settings not found or invalid. Creating new settings...");
         EEPROM_CreateSettings();
@@ -101,14 +99,13 @@ void setup() {
         Serial.println("wifi_ntp: " + String(new_sett.wifi_ntp));
 
         vf_getSettings(new_sett, request);
-        Serial.println(new_sett.vf_profiles[0].rel_temp2vel);
 
         request->send(SPIFFS, "/reset.html", String(), false, htmlProcessor);
         Serial.println("Saving new settings...");
         EEPROM_WriteSettings(new_sett);
         Serial.println("Restarting...");
         delay(1000);
-        // ESP.restart();
+        ESP.restart();
     });
     server.begin();
 }

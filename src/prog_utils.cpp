@@ -24,7 +24,7 @@ String getVfHtml(const String& var) {
     int profile = var.substring(2, 3).toInt();
     if ( profile < 0 || profile >= VF_PROFILES_MAX ) return String();
 
-    String param = var.substring(3);
+    String param = var.substring(4); // skip "vfX-"
     if ( param == "enabled" ) return settings.vf_profiles[profile].enabled ? "checked" : "";
     if ( param == "rel_temp2vel" ) return String(settings.vf_profiles[profile].rel_temp2vel);
     if ( param == "vel0" ) return String(settings.vf_profiles[profile].vel0);
@@ -35,14 +35,14 @@ String getVfHtml(const String& var) {
 
 
 void vf_getSettings(EEPROM_Settings& sett, AsyncWebServerRequest *request) {
-    for ( uint8_t i=0 ; i<1 ; i++ ) {
+    for ( uint8_t i=0 ; i<VF_PROFILES_MAX ; i++ ) {
         sett.vf_profiles[i].enabled = request->hasParam("vf" + String(i) + "-enabled");
         sett.vf_profiles[i].rel_temp2vel = request->getParam("vf" + String(i) + "-rel_temp2vel")->value().toInt();
         sett.vf_profiles[i].vel0 = request->getParam("vf" + String(i) + "-vel0")->value().toInt();
         sett.vf_profiles[i].time_start = string2time(request->getParam("vf" + String(i) + "-time_start")->value());
         sett.vf_profiles[i].time_end = string2time(request->getParam("vf" + String(i) + "-time_end")->value());
 
-        Serial.println("  vf" + String(i) + ":");
+        Serial.println("vf" + String(i) + ":");
         Serial.println("  enabled: " + String(sett.vf_profiles[i].enabled));
         Serial.println("  rel_temp2vel: " + String(sett.vf_profiles[i].rel_temp2vel));
         Serial.println("  vel0: " + String(sett.vf_profiles[i].vel0));
