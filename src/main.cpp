@@ -10,14 +10,21 @@ EEPROM_Settings settings;
 AsyncWebServer server(80);
 struct tm timeinfo;
 
+LiquidCrystal lcd(PIN_LCD_RS, PIN_LCD_EN, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7);
+
 
 void setup() {
     Serial.begin(115200);
     Serial.println("Starting...");
 
+    // LCD init
+    lcd.begin(16, 2);
+    lcd_print("Suka"); delay(PRINT_DELAY);
+
     // Initialize SPIFFS
     if(!SPIFFS.begin(true)){
         Serial.println("An Error has occurred while mounting SPIFFS");
+        lcd_print("SPIFFS error"); delay(PRINT_DELAY);
         return;
     }
 
@@ -27,6 +34,7 @@ void setup() {
     Serial.println("Board ID: " + String(settings.board_id) + ", version: " + String(settings.version));
     if( strcmp(settings.board_id, BOARD_ID) != 0 || settings.version != VERSION ) {
         Serial.println("Settings not found or invalid. Creating new settings...");
+        lcd_print("Creating", "New settings..."); delay(PRINT_DELAY);
         EEPROM_CreateSettings();
         EEPROM_ReadSettings();
     }
@@ -34,12 +42,15 @@ void setup() {
     // Wifi init
     if( settings.wifi_ap ) {
         Serial.println("Starting AP...");
+        lcd_print("Starting", "AP...");
         WiFi.softAP(AP_SSID, AP_PWD);
         IPAddress IP = WiFi.softAPIP();
         Serial.print("AP IP address: ");
         Serial.println(IP);
+        lcd_print("AP IP address:", IP.toString()); delay(PRINT_DELAY);
     } else {
         Serial.println("WIFI_SSID: " + String(settings.wifi_ssid));
+        lcd_print("Wifi:", settings.wifi_ssid); delay(PRINT_DELAY);
         if ( !settings.wifi_dhcp ) {
             IPAddress local_ip(settings.wifi_ip);
             IPAddress gateway(settings.wifi_gateway);
@@ -47,14 +58,17 @@ void setup() {
             Serial.println("WIFI_IP: " + local_ip.toString());
             Serial.println("WIFI_GATEWAY: " + gateway.toString());
             Serial.println("WIFI_SUBNET: " + subnet.toString());
+            lcd_print("IP Estatica:", local_ip.toString()); delay(PRINT_DELAY);
             if ( !WiFi.config(local_ip, gateway, subnet) ) {
                 Serial.println("Failed to configure static IP");
             }
         }
         Serial.println("Connecting to WiFi...");
+        lcd_print("Connecting", "to WiFi...");
         bool connected = connectToWifi(settings.wifi_ssid, settings.wifi_pass);
         if (connected) {
             Serial.println("Connected to WiFi with IP address: " + WiFi.localIP().toString());
+            lcd_print("Connected", WiFi.localIP().toString()); delay(PRINT_DELAY);
         } else {
             Serial.println("Failed to connect to WiFi.");
         }
@@ -62,6 +76,7 @@ void setup() {
 
     // NTP init
     Serial.println("NTP server: " + String(settings.wifi_ntp));
+    lcd_print("NTP server:", settings.wifi_ntp); delay(PRINT_DELAY);
     configTime(-10800, 0, settings.wifi_ntp);
     syncLocalTime();
 
@@ -104,6 +119,7 @@ void setup() {
         Serial.println("Saving new settings...");
         EEPROM_WriteSettings(new_sett);
         Serial.println("Restarting...");
+        lcd_print("Restarting...");
         delay(1000);
         ESP.restart();
     });
@@ -114,6 +130,7 @@ void setup() {
 
 void loop() {
     getLocalTime(&timeinfo);
+    lcd_print("Time:", time2string(timeinfo)); delay(PRINT_DELAY);
 
     // int prof_index = getProfileForTime(settings.vf_profiles, timeinfo);
     // if ( prof_index == -1 ) {

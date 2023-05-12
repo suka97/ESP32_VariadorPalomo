@@ -16,11 +16,13 @@ String time2string(struct tm timeinfo) {
 
 
 void syncLocalTime() {
-  while (!getLocalTime(&timeinfo)) {
-    Serial.println("Failed to obtain time");
-    delay(1000);
-  }
-  Serial.println(time2string(timeinfo));
+    while (!getLocalTime(&timeinfo)) {
+        Serial.println("Failed to obtain time");
+        lcd_print("Failed to", "obtain time");
+        delay(1000);
+    }
+    Serial.println(time2string(timeinfo));
+    lcd_print("Time:", time2string(timeinfo)); 
 }
 
 
