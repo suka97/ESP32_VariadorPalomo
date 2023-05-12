@@ -3,8 +3,10 @@
 
 #include <Arduino.h>
 
-#define PRINT_DELAY 2000
+#define PRINT_DELAY 0//2000
 
 void lcd_print(const String& str, const String& str2="");
+void lcd_screen1();
+void lcd_screen2();
 
 #endif

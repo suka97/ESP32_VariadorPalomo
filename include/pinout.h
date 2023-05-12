@@ -8,4 +8,11 @@
 #define PIN_LCD_D6 23
 #define PIN_LCD_D7 5
 
+#define PIN_DS2820 4
+
+#define PIN_RESET 15
+
+#define PIN_VF_EN 0
+#define PIN_VF_V0 2
+
 #endif

@@ -12,6 +12,12 @@ struct tm timeinfo;
 
 LiquidCrystal lcd(PIN_LCD_RS, PIN_LCD_EN, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7);
 
+OneWire oneWire(PIN_DS2820);
+DallasTemperature ds2820(&oneWire);
+float ds2820_temp = 0;
+
+int vf_profile = -1;
+
 
 void setup() {
     Serial.begin(115200);
@@ -27,6 +33,16 @@ void setup() {
         lcd_print("SPIFFS error"); delay(PRINT_DELAY);
         return;
     }
+
+
+    // DS2820 init
+    ds2820.begin();
+    ds2820_temp = getTemp();
+    if ( ds2820_temp == DEVICE_DISCONNECTED_C ) {
+        Serial.println("DS2820 not found");
+        lcd_print("Error sensor", "temperatura"); delay(PRINT_DELAY);
+    }
+
 
     // EEPROM Settings init
     EEPROM_Begin();
@@ -130,7 +146,7 @@ void setup() {
 
 void loop() {
     getLocalTime(&timeinfo);
-    lcd_print("Time:", time2string(timeinfo)); delay(PRINT_DELAY);
+    lcd_screen1(); delay(PRINT_DELAY);
 
     // int prof_index = getProfileForTime(settings.vf_profiles, timeinfo);
     // if ( prof_index == -1 ) {
