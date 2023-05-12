@@ -15,4 +15,9 @@
 #define PIN_VF_EN 0
 #define PIN_VF_V0 2
 
+#define PWM_CHANNEL 0
+#define PWM_FREQ 5000
+#define PWM_RESOLUTION 8
+#define PWM_MAX_DUTY 255
+
 #endif

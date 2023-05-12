@@ -39,5 +39,6 @@ extern DallasTemperature ds2820;
 extern float ds2820_temp;
 
 extern int vf_profile;
+extern uint32_t vf_pwm;
 
 #endif

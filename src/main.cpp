@@ -1,5 +1,7 @@
 #include <global.h>
 
+const uint32_t REFRESH_DELAY = 1000;
+
 const char* BOARD_ID = "PalomoVF";
 const uint8_t VERSION = 5;
 
@@ -11,17 +13,25 @@ AsyncWebServer server(80);
 struct tm timeinfo;
 
 LiquidCrystal lcd(PIN_LCD_RS, PIN_LCD_EN, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7);
+uint8_t screen_id = 0;
 
 OneWire oneWire(PIN_DS2820);
 DallasTemperature ds2820(&oneWire);
 float ds2820_temp = 0;
 
 int vf_profile = -1;
+uint32_t vf_pwm = 0;
 
 
 void setup() {
     Serial.begin(115200);
     Serial.println("Starting...");
+
+    // IO init
+    pinMode(PIN_RESET, INPUT_PULLUP);
+    // PWM init
+    ledcSetup(PWM_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
+    ledcAttachPin(PIN_VF_V0, PWM_CHANNEL);
 
     // LCD init
     lcd.begin(16, 2);
@@ -146,15 +156,14 @@ void setup() {
 
 void loop() {
     getLocalTime(&timeinfo);
-    lcd_screen1(); delay(PRINT_DELAY);
+    ds2820_temp = getTemp();
 
-    // int prof_index = getProfileForTime(settings.vf_profiles, timeinfo);
-    // if ( prof_index == -1 ) {
-    //     Serial.println("No profile found for current time");
-    //     delay(1000);
-    //     return;
-    // }
+    int prof_index = getProfileForTime(settings.vf_profiles, timeinfo);
+    if ( prof_index != vf_profile ) {
+        vf_profile = prof_index;
+        Serial.println("Profile Triggered: " + String(vf_profile));
+    }
 
-    // Serial.println("Profile found: " + String(prof_index));
-    // delay(1000);
+    lcd_screen1(); 
+    delay(REFRESH_DELAY);
 }
