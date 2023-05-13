@@ -1,6 +1,7 @@
 #include <global.h>
 
 const uint32_t REFRESH_DELAY = 1000;
+const uint32_t RESET_TIME = 10000;
 
 const char* BOARD_ID = "PalomoVF";
 const uint8_t VERSION = 5;
@@ -37,13 +38,6 @@ void setup() {
     lcd.begin(16, 2);
     lcd_print("Suka"); delay(PRINT_DELAY);
 
-    // Initialize SPIFFS
-    if(!SPIFFS.begin(true)){
-        Serial.println("An Error has occurred while mounting SPIFFS");
-        lcd_print("SPIFFS error"); delay(PRINT_DELAY);
-        return;
-    }
-
     // DS2820 init
     ds2820.begin();
     ds2820_temp = getTemp();
@@ -61,6 +55,13 @@ void setup() {
         lcd_print("Creating", "New settings..."); delay(PRINT_DELAY);
         EEPROM_CreateSettings();
         EEPROM_ReadSettings();
+    }
+
+    // Initialize SPIFFS
+    if(!SPIFFS.begin(true)){
+        Serial.println("An Error has occurred while mounting SPIFFS");
+        lcd_print("SPIFFS error"); delay(PRINT_DELAY);
+        return;
     }
 
     // Wifi init
@@ -153,6 +154,7 @@ void setup() {
 
 
 void loop() {
+    handleResetButton();
     getLocalTime(&timeinfo);
     ds2820_temp = getTemp();
 

@@ -8,5 +8,6 @@ int getProfileForTime(VF_Profile profiles[], struct tm now);
 String getVfHtml(const String& var);
 void vf_getSettings(EEPROM_Settings& sett, AsyncWebServerRequest *request);
 void handleVfProfile();
+void handleResetButton();
 
 #endif

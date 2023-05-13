@@ -58,3 +58,24 @@ void handleVfProfile() {
     vf_pwm = vel / settings.vf_vel_max * PWM_MAX_DUTY;
     ledcWrite(PWM_CHANNEL, vf_pwm); 
 }
+
+
+void handleResetButton() {
+    uint32_t reset_time = millis();
+    uint32_t refresh_time = millis();
+    while ( digitalRead(PIN_RESET) == LVL_RESET_PRESSED ) {
+        if ( millis()-refresh_time > REFRESH_DELAY ) {
+            uint32_t time_left = (RESET_TIME - (millis()-reset_time)) / 1000;
+            Serial.println("Reseting in " + String(time_left) + "s");
+            lcd_print("Reseting in", String(time_left) + "s");
+            refresh_time = millis();
+        }
+        if ( millis()-reset_time > RESET_TIME ) {
+            Serial.println("Erasing EEPROM and restarting");
+            lcd_print("Borrando EEPROM y reiniciando");
+            EEPROM_CreateSettings();
+            delay(1000);
+            ESP.restart();
+        }
+    }
+}
