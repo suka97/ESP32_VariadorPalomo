@@ -44,7 +44,6 @@ void setup() {
         return;
     }
 
-
     // DS2820 init
     ds2820.begin();
     ds2820_temp = getTemp();
@@ -52,7 +51,6 @@ void setup() {
         Serial.println("DS2820 not found");
         lcd_print("Error sensor", "temperatura"); delay(PRINT_DELAY);
     }
-
 
     // EEPROM Settings init
     EEPROM_Begin();
@@ -164,6 +162,7 @@ void loop() {
         Serial.println("Profile Triggered: " + String(vf_profile));
     }
 
+    handleVfProfile();
     lcd_screen1(); 
     delay(REFRESH_DELAY);
 }

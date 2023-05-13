@@ -50,3 +50,11 @@ void vf_getSettings(EEPROM_Settings& sett, AsyncWebServerRequest *request) {
         Serial.println("  time_end: " + time2string(sett.vf_profiles[i].time_end));
     }
 }
+
+
+void handleVfProfile() {
+    if ( vf_profile == -1 ) return;
+    float vel = settings.vf_profiles[vf_profile].vel0 + ds2820_temp * settings.vf_profiles[vf_profile].rel_temp2vel;
+    vf_pwm = vel / settings.vf_vel_max * PWM_MAX_DUTY;
+    ledcWrite(PWM_CHANNEL, vf_pwm); 
+}

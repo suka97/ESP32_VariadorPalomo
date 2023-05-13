@@ -34,6 +34,7 @@ struct EEPROM_Settings
     char wifi_ntp[NTP_MAX_LENGTH];
 
     VF_Profile vf_profiles[VF_PROFILES_MAX];
+    float vf_vel_max;
 };
 
 #endif
