@@ -12,6 +12,7 @@ const char* AP_PWD = "12345678";
 EEPROM_Settings settings;
 AsyncWebServer server(80);
 struct tm timeinfo;
+bool wifi_connected = false;
 
 LiquidCrystal lcd(PIN_LCD_RS, PIN_LCD_EN, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7);
 uint8_t screen_id = 0;
@@ -92,18 +93,23 @@ void setup() {
         lcd_print("Connecting", "to WiFi...");
         bool connected = connectToWifi(settings.wifi_ssid, settings.wifi_pass);
         if (connected) {
+            wifi_connected = true;
             Serial.println("Connected to WiFi with IP address: " + WiFi.localIP().toString());
-            lcd_print("Connected", WiFi.localIP().toString()); delay(PRINT_DELAY);
+            lcd_print("Connected", WiFi.localIP().toString()); delay(5*PRINT_DELAY);
         } else {
-            Serial.println("Failed to connect to WiFi.");
+            Serial.println("Failed to connect to WiFi");
+            lcd_print("Failed to", "connect to WiFi"); delay(PRINT_DELAY);
+            while(1);
         }
     }
 
     // NTP init
-    Serial.println("NTP server: " + String(settings.wifi_ntp));
-    lcd_print("NTP server:", settings.wifi_ntp); delay(PRINT_DELAY);
-    configTime(-10800, 0, settings.wifi_ntp);
-    syncLocalTime();
+    if ( wifi_connected ) {
+        Serial.println("NTP server: " + String(settings.wifi_ntp));
+        lcd_print("NTP server:", settings.wifi_ntp); delay(PRINT_DELAY);
+        configTime(-10800, 0, settings.wifi_ntp);
+        syncLocalTime();
+    }
 
     // Webserver init
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -154,6 +160,8 @@ void setup() {
 
 
 void loop() {
+    if ( !wifi_connected ) return;
+
     handleResetButton();
     getLocalTime(&timeinfo);
     ds2820_temp = getTemp();

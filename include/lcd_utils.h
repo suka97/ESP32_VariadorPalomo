@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#define PRINT_DELAY 0 //500
+#define PRINT_DELAY 500
 
 void lcd_print(const String& str, const String& str2="");
 void lcd_screen1();
