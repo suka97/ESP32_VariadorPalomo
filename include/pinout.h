@@ -37,7 +37,7 @@
 
     #define PIN_DS2820 15
 
-    #define PIN_RESET 4
+    #define PIN_RESET 0
     #define LVL_RESET_PRESSED LOW
 
     #define PIN_VF_EN 16
