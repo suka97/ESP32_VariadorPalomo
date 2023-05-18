@@ -31,6 +31,8 @@ void setup() {
 
     // IO init
     pinMode(PIN_RESET, INPUT_PULLUP);
+    pinMode(PIN_KEY_ONOFF, INPUT_PULLUP);
+    pinMode(PIN_KEY_AUTO, INPUT_PULLUP);
     // PWM init
     ledcSetup(PWM_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
     ledcAttachPin(PIN_VF_V0, PWM_CHANNEL);

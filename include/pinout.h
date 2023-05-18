@@ -35,9 +35,17 @@
     #define PIN_LCD_D6 19
     #define PIN_LCD_D7 21
 
+    #define PIN_KEY_ONOFF  13
+    #define LVL_KEY_ONOFF_PRESSED LOW
+
+    #define PIN_KEY_AUTO   14
+    #define LVL_KEY_AUTO_PRESSED LOW
+
+    #define PIN_ADC_MANUAL 32
+
     #define PIN_DS2820 15
 
-    #define PIN_RESET 0
+    #define PIN_RESET 0     // builtin-BOOT button
     #define LVL_RESET_PRESSED LOW
 
     #define PIN_VF_EN 16
