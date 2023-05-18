@@ -22,7 +22,8 @@
 
 #define EEPROM_SIZE 512
 
-extern const uint32_t REFRESH_DELAY;
+extern const uint32_t REFRESH_TIME;
+extern const uint32_t REFRESH_SCREEN;
 extern const uint32_t RESET_TIME;
 
 extern const char* BOARD_ID;

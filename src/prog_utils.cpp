@@ -55,6 +55,7 @@ void vf_getSettings(EEPROM_Settings& sett, AsyncWebServerRequest *request) {
 void handleVfProfile() {
     if ( vf_profile == -1 ) {
         digitalWrite(PIN_VF_EN, !LVL_VF_EN_ON);
+        vf_pwm = 0;
         return;
     }
     float vel = settings.vf_profiles[vf_profile].vel0 + ds2820_temp * settings.vf_profiles[vf_profile].rel_temp2vel;
@@ -75,7 +76,7 @@ void handleResetButton() {
     uint32_t reset_time = millis();
     uint32_t refresh_time = millis();
     while ( digitalRead(PIN_RESET) == LVL_RESET_PRESSED ) {
-        if ( millis()-refresh_time > REFRESH_DELAY ) {
+        if ( millis()-refresh_time > REFRESH_SCREEN ) {
             uint32_t time_left = (RESET_TIME - (millis()-reset_time)) / 1000;
             Serial.println("Reseting in " + String(time_left) + "s");
             lcd_print("Reseting in", String(time_left) + "s");

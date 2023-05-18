@@ -37,7 +37,7 @@ void lcd_screen1() {
         if ( digitalRead(PIN_KEY_AUTO) == LVL_KEY_AUTO_PRESSED )
             row2 += "          " + getVfStr();
         else 
-            row2 += "      MANUAL";
+            row2 += "       MANUAL";
     }
 
     lcd_print(row1, row2);

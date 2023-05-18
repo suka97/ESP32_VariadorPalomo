@@ -1,6 +1,7 @@
 #include <global.h>
 
-const uint32_t REFRESH_DELAY = 500;
+const uint32_t REFRESH_TIME = 1000;
+const uint32_t REFRESH_SCREEN = 100;
 const uint32_t RESET_TIME = 10000;
 
 const char* BOARD_ID = "PalomoVF";
@@ -160,13 +161,19 @@ void setup() {
 }
 
 
+uint32_t refresh_time = 0;
+uint32_t refresh_screen = 0;
 
 void loop() {
     if ( !wifi_connected ) return;
 
     handleResetButton();
-    getLocalTime(&timeinfo);
     ds2820_temp = getTemp();
+
+    if ( millis()-refresh_time > REFRESH_TIME ) {
+        refresh_time = millis();
+        getLocalTime(&timeinfo);
+    }
 
     if ( digitalRead(PIN_KEY_ONOFF) == LVL_KEY_ONOFF_ON ) {
         if ( digitalRead(PIN_KEY_AUTO) == LVL_KEY_AUTO_PRESSED ) {
@@ -185,6 +192,8 @@ void loop() {
         digitalWrite(PIN_VF_EN, !LVL_VF_EN_ON);
     }
 
-    lcd_screen1(); 
-    delay(REFRESH_DELAY);
+    if ( millis()-refresh_screen > REFRESH_SCREEN ) {
+        refresh_screen = millis();
+        lcd_screen1();
+    }
 }
