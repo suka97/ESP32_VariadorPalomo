@@ -29,8 +29,17 @@ String getPwmStr() {
 
 void lcd_screen1() {
     String row1 = time2string(timeinfo) + "    " + temp2string(ds2820_temp);
-    String row2 = getPwmStr() + String(digitalRead(PIN_KEY_AUTO)) + String(digitalRead(PIN_KEY_ONOFF));
-    // String row2 = getPwmStr() + "          " + getVfStr();
+    String row2;
+    if ( digitalRead(PIN_KEY_ONOFF) != LVL_KEY_ONOFF_ON )
+        row2 = "   OFF   ";
+    else {
+        row2 = getPwmStr();
+        if ( digitalRead(PIN_KEY_AUTO) == LVL_KEY_AUTO_PRESSED )
+            row2 += "          " + getVfStr();
+        else 
+            row2 += "      MANUAL";
+    }
+
     lcd_print(row1, row2);
 }
 

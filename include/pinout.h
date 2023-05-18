@@ -35,13 +35,15 @@
     #define PIN_LCD_D6 19
     #define PIN_LCD_D7 21
 
-    #define PIN_KEY_ONOFF  13
-    #define LVL_KEY_ONOFF_PRESSED LOW
+    #define PIN_KEY_ONOFF  14
+    #define LVL_KEY_ONOFF_ON HIGH
 
-    #define PIN_KEY_AUTO   14
-    #define LVL_KEY_AUTO_PRESSED LOW
+    #define PIN_KEY_AUTO   13
+    #define LVL_KEY_AUTO_PRESSED HIGH
 
     #define PIN_ADC_MANUAL 32
+    #define LVL_ADC_MANUAL_MAX 4095
+    #define ADC_MANUAL_BWD
 
     #define PIN_DS2820 15
 
@@ -49,7 +51,10 @@
     #define LVL_RESET_PRESSED LOW
 
     #define PIN_VF_EN 16
+    #define LVL_VF_EN_ON HIGH
+
     #define PIN_VF_V0 2
+    #define LVL_VF_V0_ON HIGH
 
     #define PWM_CHANNEL 0
     #define PWM_FREQ 5000

@@ -53,10 +53,21 @@ void vf_getSettings(EEPROM_Settings& sett, AsyncWebServerRequest *request) {
 
 
 void handleVfProfile() {
-    if ( vf_profile == -1 ) return;
+    if ( vf_profile == -1 ) {
+        digitalWrite(PIN_VF_EN, !LVL_VF_EN_ON);
+        return;
+    }
     float vel = settings.vf_profiles[vf_profile].vel0 + ds2820_temp * settings.vf_profiles[vf_profile].rel_temp2vel;
-    vf_pwm = vel / settings.vf_vel_max * PWM_MAX_DUTY;
+    vf_pwm = vel / 100.0 * PWM_MAX_DUTY;
     ledcWrite(PWM_CHANNEL, vf_pwm); 
+    digitalWrite(PIN_VF_EN, LVL_VF_EN_ON);
+}
+
+
+void handleManual() {
+    digitalWrite(PIN_VF_EN, LVL_VF_EN_ON);
+    vf_pwm = getManualAdc() / 100.0 * PWM_MAX_DUTY;
+    ledcWrite(PWM_CHANNEL, vf_pwm);
 }
 
 

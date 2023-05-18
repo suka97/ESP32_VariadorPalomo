@@ -1,6 +1,6 @@
 #include <global.h>
 
-const uint32_t REFRESH_DELAY = 1000;
+const uint32_t REFRESH_DELAY = 500;
 const uint32_t RESET_TIME = 10000;
 
 const char* BOARD_ID = "PalomoVF";
@@ -168,13 +168,23 @@ void loop() {
     getLocalTime(&timeinfo);
     ds2820_temp = getTemp();
 
-    int prof_index = getProfileForTime(settings.vf_profiles, timeinfo);
-    if ( prof_index != vf_profile ) {
-        vf_profile = prof_index;
-        Serial.println("Profile Triggered: " + String(vf_profile));
+    if ( digitalRead(PIN_KEY_ONOFF) == LVL_KEY_ONOFF_ON ) {
+        if ( digitalRead(PIN_KEY_AUTO) == LVL_KEY_AUTO_PRESSED ) {
+            int prof_index = getProfileForTime(settings.vf_profiles, timeinfo);
+            if ( prof_index != vf_profile ) {
+                vf_profile = prof_index;
+                Serial.println("Profile Triggered: " + String(vf_profile));
+            }
+            handleVfProfile();
+        }
+        else {
+            handleManual();
+        }
+    }
+    else {
+        digitalWrite(PIN_VF_EN, !LVL_VF_EN_ON);
     }
 
-    handleVfProfile();
     lcd_screen1(); 
     delay(REFRESH_DELAY);
 }
