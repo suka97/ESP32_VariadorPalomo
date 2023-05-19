@@ -14,3 +14,13 @@ float getManualAdc() {
     #endif
     return adc * 100.0 / LVL_ADC_MANUAL_MAX;
 }
+
+
+void setVfSpeed(float speed) {
+    vf_pwm = speed / 100.0 * PWM_MAX_DUTY;
+    uint32_t duty = vf_pwm;
+    #ifdef LVL_VF_V0_INV
+        duty = PWM_MAX_DUTY - vf_pwm;
+    #endif
+    ledcWrite(PWM_CHANNEL, duty); 
+}

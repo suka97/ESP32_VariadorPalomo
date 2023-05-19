@@ -3,5 +3,6 @@
 
 float getTemp();
 float getManualAdc();
+void setVfSpeed(float speed);
 
 #endif

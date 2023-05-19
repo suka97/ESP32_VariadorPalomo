@@ -59,16 +59,14 @@ void handleVfProfile() {
         return;
     }
     float vel = settings.vf_profiles[vf_profile].vel0 + ds2820_temp * settings.vf_profiles[vf_profile].rel_temp2vel;
-    vf_pwm = vel / 100.0 * PWM_MAX_DUTY;
-    ledcWrite(PWM_CHANNEL, vf_pwm); 
+    setVfSpeed(vel);
     digitalWrite(PIN_VF_EN, LVL_VF_EN_ON);
 }
 
 
 void handleManual() {
     digitalWrite(PIN_VF_EN, LVL_VF_EN_ON);
-    vf_pwm = getManualAdc() / 100.0 * PWM_MAX_DUTY;
-    ledcWrite(PWM_CHANNEL, vf_pwm);
+    setVfSpeed( getManualAdc() );
 }
 
 

@@ -50,11 +50,11 @@
     #define PIN_RESET 0     // builtin-BOOT button
     #define LVL_RESET_PRESSED LOW
 
-    #define PIN_VF_EN 16
+    #define PIN_VF_EN 26
     #define LVL_VF_EN_ON HIGH
 
-    #define PIN_VF_V0 2
-    #define LVL_VF_V0_ON HIGH
+    #define PIN_VF_V0 25
+    #define LVL_VF_V0_INV
 
     #define PWM_CHANNEL 0
     #define PWM_FREQ 5000
