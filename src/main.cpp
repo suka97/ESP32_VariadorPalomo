@@ -3,6 +3,7 @@
 const uint32_t REFRESH_TIME = 1000;
 const uint32_t REFRESH_SCREEN = 100;
 const uint32_t RESET_TIME = 10000;
+const uint32_t NOWIFI_REBOOT_DELAY = 60000*5;   // 5 min
 
 const char* BOARD_ID = "PalomoVF";
 const uint8_t VERSION = 5;
@@ -69,6 +70,8 @@ void setup() {
         return;
     }
 
+    handleResetButton();
+
     // Wifi init
     if( settings.wifi_ap ) {
         Serial.println("Starting AP...");
@@ -102,8 +105,14 @@ void setup() {
             lcd_print("Connected", WiFi.localIP().toString()); delay(5*PRINT_DELAY);
         } else {
             Serial.println("Failed to connect to WiFi");
-            lcd_print("Failed to", "connect to WiFi"); delay(PRINT_DELAY);
-            while(1);
+            lcd_print("Failed to", "connect to WiFi"); delay(PRINT_DELAY*2);
+
+            // modo  default
+            lcd_print("Vel Default", "5min reinicio");
+            vf_profile = 3;
+            handleVfProfile();
+            delay(NOWIFI_REBOOT_DELAY);
+            ESP.restart();
         }
     }
 
@@ -169,7 +178,10 @@ void loop() {
     if ( !wifi_connected ) return;
 
     handleResetButton();
-    ds2820_temp = getTemp();
+    float new_temp = getTemp();
+    if ( new_temp != DEVICE_DISCONNECTED_C ) {
+        ds2820_temp = new_temp;
+    }
 
     if ( millis()-refresh_time > REFRESH_TIME ) {
         refresh_time = millis();

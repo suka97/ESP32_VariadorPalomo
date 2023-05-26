@@ -17,6 +17,7 @@ float getManualAdc() {
 
 
 void setVfSpeed(float speed) {
+    if ( speed > 100.0 ) speed = 100.0;
     vf_pwm = speed / 100.0 * PWM_MAX_DUTY;
     uint32_t duty = vf_pwm;
     #ifdef LVL_VF_V0_INV
