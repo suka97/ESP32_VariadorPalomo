@@ -57,6 +57,10 @@ bool connectToWifi(const char* ssid, const char* password) {
 
 
 String htmlProcessor(const String& var){
+    if ( var == "curr_temp" ) return String(ds2820_temp);
+    if ( var == "curr_mode" ) return (digitalRead(PIN_KEY_AUTO)==LVL_KEY_AUTO_PRESSED) ? String("AUTO") : String("MANUAL");
+    if ( var == "curr_vel" ) return String(vf_pwm * 100 / PWM_MAX_DUTY);
+
     if ( var == "wifi_ssid" ) return settings.wifi_ssid;
     if ( var == "wifi_pass" ) return settings.wifi_pass;
     if ( var == "wifi_ap" ) return settings.wifi_ap ? "checked" : "";
