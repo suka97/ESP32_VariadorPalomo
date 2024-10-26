@@ -1,215 +1,200 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ESP32 Web Server</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="data:,">
   <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="script.js"></script>
 </head>
 <body>
 
-  <header>
-    <div class="text-box">
-      <h1 id="title">CONGIGURACION</h1><hr>
-        <p id="description">Configurar los parametros basicos del equipo</p>
-    </div>
-  </header>
+  <div class="container my-4">
+    <header class="text-center mb-4">
+      <h1 id="title">CONFIGURACIÓN</h1>
+      <hr>
+      <p id="description">Configurar los parámetros básicos del equipo</p>
+    </header>
       
-      <form id="survey-form" action="/save">
-
-        <!-- ########## WIFI SETTINGS ########## -->
-        <div class="container">
-          <p id="description">Configuracion WIFI</p>
-
-        <div class="labels">
-          <label for="wifi_ssid">WIFI SSID</label></div>
-        <div class="input-tab">
-          <input name="wifi_ssid" class="input-field" type="text" value="%wifi_ssid%" placeholder="" required></div>
-        
-        <div class="labels">
-          <label for="wifi_pass">WIFI PASS</label></div>
-        <div class="input-tab">
-          <input name="wifi_pass" class="input-field" type="text" value="%wifi_pass%" placeholder="" required></div>
-        
-        <div class="labels-checkbox">
-          <label for="wifi_ap">WIFI AP</label></div>
-        <div class="input-tab">
-          <input name="wifi_ap" type="checkbox" value="1" %wifi_ap%><br>
+    <form id="survey-form" action="/save">
+      <!-- ########## WIFI SETTINGS ########## -->
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          Configuración WIFI
         </div>
-
-        <div class="labels-checkbox">
-          <label for="wifi_dhcp">WIFI DHCP</label></div>
-        <div class="input-tab">
-          <input name="wifi_dhcp" type="checkbox" value="1" %wifi_dhcp%><br>
-        </div>
-
-        <div class="labels">
-          <label for="wifi_ip">WIFI IP</label></div>
-        <div class="input-tab">
-          <input name="wifi_ip" class="input-field" type="text" value="%wifi_ip%" placeholder="" required></div>
-
-        <div class="labels">
-          <label for="wifi_gateway">WIFI GATEWAY</label></div>
-        <div class="input-tab">
-          <input name="wifi_gateway" class="input-field" type="text" value="%wifi_gateway%" placeholder="" required></div>
-
-          <div class="labels">
-            <label for="wifi_subnet">WIFI SUBNET</label></div>
-          <div class="input-tab">
-            <input name="wifi_subnet" class="input-field" type="text" value="%wifi_subnet%" placeholder="" required></div>
-
-          <div class="labels">
-            <label for="wifi_dns">WIFI DNS</label></div>
-          <div class="input-tab">
-            <input name="wifi_dns" class="input-field" type="text" value="%wifi_dns%" placeholder="" required></div>
-        
-        <div style="display: none;">
-          <div class="labels">
-            <label for="wifi_ntp">NTP SERVER</label></div>
-          <div class="input-tab">
-            <input name="wifi_ntp" class="input-field" type="text" value="%wifi_ntp%" placeholder="" required></div>
-        </div>
-        
-        </div>
-        <!-- ############################## -->
-
-
-        <br>
-        <!-- ########## CallMeBot Explanation ########## -->
-        <div class="containernote">
-          <p>Para poder usar el BOT hay que <a href="https://wa.me/34684728023?text=I%20allow%20callmebot%20to%20send%20me%20messages" target="_blank">escribirle un mensaje primero</a></p>
-          <p>El BOT contestara con el API Key a usar para el numero con el que se le hablo</p>
-        </div>
-
-
-        <br>
-        <!-- ########## WhatsApp Numero0 ########## -->
-        <div class="container">
-          <p id="description">Contacto WhatsApp 0</p>
-
-          <div class="labels-checkbox">
-            <label for="wp0-enabled">ENABLED</label></div>
-          <div class="input-tab">
-            <input name="wp0-enabled" type="checkbox" value="1" %wp0-enabled%><br>
-          </div>
-
-          <div class="labels">
-            <label for="wp0-number">Numero (ej 54911...)</label></div>
-          <div class="input-tab">
-            <input name="wp0-number" class="input-field" type="number" value="%wp0-number%" placeholder="" ></div>
-        
-          <div class="labels">
-            <label for="wp0-apikey">API Key</label></div>
-          <div class="input-tab">
-            <input name="wp0-apikey" class="input-field" type="number" value="%wp0-apikey%" placeholder="" ></div>
-
-          <div class="btn">
-            <button id="wp0-test" type="button">Probar</button>
-          </div>
+        <div class="card text-center">
           
-        </div>
-        <!-- ############################## -->
-
-
-        <br>
-        <!-- ########## WhatsApp Numero1 ########## -->
-        <div class="container">
-          <p id="description">Contacto WhatsApp 1</p>
-
-          <div class="labels-checkbox">
-            <label for="wp1-enabled">ENABLED</label></div>
-          <div class="input-tab">
-            <input name="wp1-enabled" type="checkbox" value="1" %wp1-enabled%><br>
+          <div class="form-group">
+            <label for="wifi_ssid">WIFI SSID</label>
+            <input name="wifi_ssid" class="form-control" type="text" value="%wifi_ssid%" required>
           </div>
 
-          <div class="labels">
-            <label for="wp1-number">Numero (ej 54911...)</label></div>
-          <div class="input-tab">
-            <input name="wp1-number" class="input-field" type="number" value="%wp1-number%" placeholder="" ></div>
-        
-          <div class="labels">
-            <label for="wp1-apikey">API Key</label></div>
-          <div class="input-tab">
-            <input name="wp1-apikey" class="input-field" type="number" value="%wp1-apikey%" placeholder="" ></div>
-
-          <div class="btn">
-            <button id="wp1-test" type="button">Probar</button>
-          </div>
-          
-          </div>
-          <!-- ############################## -->
-
-
-          <br>
-        <!-- ########## WhatsApp Numero2 ########## -->
-        <div class="container">
-          <p id="description">Contacto WhatsApp 2</p>
-
-          <div class="labels-checkbox">
-            <label for="wp2-enabled">ENABLED</label></div>
-          <div class="input-tab">
-            <input name="wp2-enabled" type="checkbox" value="1" %wp2-enabled%><br>
+          <div class="form-group">
+            <label for="wifi_pass">WIFI PASS</label>
+            <input name="wifi_pass" class="form-control" type="text" value="%wifi_pass%" required>
           </div>
 
-          <div class="labels">
-            <label for="wp2-number">Numero (ej 54911...)</label></div>
-          <div class="input-tab">
-            <input name="wp2-number" class="input-field" type="number" value="%wp2-number%" placeholder="" ></div>
-        
-          <div class="labels">
-            <label for="wp2-apikey">API Key</label></div>
-          <div class="input-tab">
-            <input name="wp2-apikey" class="input-field" type="number" value="%wp2-apikey%" placeholder="" ></div>
-
-          <div class="btn">
-            <button id="wp2-test" type="button">Probar</button>
-          </div>
-          
-          </div>
-          <!-- ############################## -->
-
-
-          <br>
-        <!-- ########## WhatsApp Numero3 ########## -->
-        <div class="container">
-          <p id="description">Contacto WhatsApp 3</p>
-
-          <div class="labels-checkbox">
-            <label for="wp3-enabled">ENABLED</label></div>
-          <div class="input-tab">
-            <input name="wp3-enabled" type="checkbox" value="1" %wp3-enabled%><br>
+          <div class="form-check mb-2">
+            <input name="wifi_ap" class="form-check-input" type="checkbox" value="1" %wifi_ap%>
+            <label class="form-check-label" for="wifi_ap">WIFI AP</label>
           </div>
 
-          <div class="labels">
-            <label for="wp3-number">Numero (ej 54911...)</label></div>
-          <div class="input-tab">
-            <input name="wp3-number" class="input-field" type="number" value="%wp3-number%" placeholder="" ></div>
-        
-          <div class="labels">
-            <label for="wp3-apikey">API Key</label></div>
-          <div class="input-tab">
-            <input name="wp3-apikey" class="input-field" type="number" value="%wp3-apikey%" placeholder="" ></div>
-
-          <div class="btn">
-            <button id="wp3-test" type="button">Probar</button>
-          </div>
-          
-          </div>
-          <!-- ############################## -->
-
-
-          <br>
-          <div class="btn">
-            <button name="submit" type="submit">Guardar Cambios</button>
-          </div>
-      </form>
+          <!-- ########## Wifi Collapsable Avanzados ########## -->
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseWifi" aria-expanded="false" aria-controls="collapseWifi">
+                    Wifi Ajustes Avanzados
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseWifi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                
+                <div class="form-check mb-2">
+                  <input name="wifi_dhcp" class="form-check-input" type="checkbox" value="1" %wifi_dhcp%>
+                  <label class="form-check-label" for="wifi_dhcp">WIFI DHCP</label>
+                </div>
       
-  
-  <footer>
-        <p>&copy 2024 Andres Sukanec</a></p>
-  </footer>
-  
+                <div class="form-group">
+                  <label for="wifi_ip">WIFI IP</label>
+                  <input name="wifi_ip" class="form-control" type="text" value="%wifi_ip%" required>
+                </div>
+      
+                <div class="form-group">
+                  <label for="wifi_gateway">WIFI GATEWAY</label>
+                  <input name="wifi_gateway" class="form-control" type="text" value="%wifi_gateway%" required>
+                </div>
+      
+                <div class="form-group">
+                  <label for="wifi_subnet">WIFI SUBNET</label>
+                  <input name="wifi_subnet" class="form-control" type="text" value="%wifi_subnet%" required>
+                </div>
+      
+                <div class="form-group">
+                  <label for="wifi_dns">WIFI DNS</label>
+                  <input name="wifi_dns" class="form-control" type="text" value="%wifi_dns%" required>
+                </div>
+      
+                <div class="form-group" style="display: none;">
+                  <label for="wifi_ntp">NTP SERVER</label>
+                  <input name="wifi_ntp" class="form-control" type="text" value="%wifi_ntp%">
+                </div>
+              
+              </div>
+            </div>
+          </div>
 
-  <script src="script.js"></script>
+        </div>
+      </div>
+
+      <!-- ########## CallMeBot Explanation ########## -->
+      <div class="alert alert-info" role="alert">
+        <p>Para poder usar el BOT hay que <a href="https://wa.me/34684728023?text=I+allow+callmebot+to+send+me+messages" target="_blank">escribirle un mensaje primero</a>.</p>
+        <p>El BOT contestará con el API Key a usar para el número con el que se le hablo.</p>
+      </div>
+
+      <!-- WhatsApp Contact 0 -->
+      <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+          Contacto WhatsApp 0
+        </div>
+        <div class="card text-center">
+          <div class="form-check mb-2">
+            <input name="wp0-enabled" class="form-check-input" type="checkbox" value="1" %wp0-enabled%>
+            <label class="form-check-label" for="wp0-enabled">ENABLED</label>
+          </div>
+          <div class="form-group">
+            <label for="wp0-number">Número (ej 54911...)</label>
+            <input name="wp0-number" class="form-control" type="number" value="%wp0-number%">
+          </div>
+          <div class="form-group">
+            <label for="wp0-apikey">API Key</label>
+            <input name="wp0-apikey" class="form-control" type="text" value="%wp0-apikey%">
+          </div>
+          <button id="wp0-test" type="button" class="btn btn-info btn-block">Probar</button>
+        </div>
+      </div>
+
+      <!-- WhatsApp Contact 1 -->
+      <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+          Contacto WhatsApp 1
+        </div>
+        <div class="card text-center">
+          <div class="form-check mb-2">
+            <input name="wp1-enabled" class="form-check-input" type="checkbox" value="1" %wp1-enabled%>
+            <label class="form-check-label" for="wp1-enabled">ENABLED</label>
+          </div>
+          <div class="form-group">
+            <label for="wp1-number">Número (ej 54911...)</label>
+            <input name="wp1-number" class="form-control" type="number" value="%wp1-number%">
+          </div>
+          <div class="form-group">
+            <label for="wp1-apikey">API Key</label>
+            <input name="wp1-apikey" class="form-control" type="text" value="%wp1-apikey%">
+          </div>
+          <button id="wp1-test" type="button" class="btn btn-info btn-block">Probar</button>
+        </div>
+      </div>
+
+      <!-- WhatsApp Contact 2 -->
+      <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+          Contacto WhatsApp 2
+        </div>
+        <div class="card text-center">
+          <div class="form-check mb-2">
+            <input name="wp2-enabled" class="form-check-input" type="checkbox" value="1" %wp2-enabled%>
+            <label class="form-check-label" for="wp2-enabled">ENABLED</label>
+          </div>
+          <div class="form-group">
+            <label for="wp2-number">Número (ej 54911...)</label>
+            <input name="wp2-number" class="form-control" type="number" value="%wp2-number%">
+          </div>
+          <div class="form-group">
+            <label for="wp2-apikey">API Key</label>
+            <input name="wp2-apikey" class="form-control" type="text" value="%wp2-apikey%">
+          </div>
+          <button id="wp2-test" type="button" class="btn btn-info btn-block">Probar</button>
+        </div>
+      </div>
+
+      <!-- WhatsApp Contact 3 -->
+      <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+          Contacto WhatsApp 3
+        </div>
+        <div class="card text-center">
+          <div class="form-check mb-2">
+            <input name="wp3-enabled" class="form-check-input" type="checkbox" value="1" %wp3-enabled%>
+            <label class="form-check-label" for="wp3-enabled">ENABLED</label>
+          </div>
+          <div class="form-group">
+            <label for="wp3-number">Número (ej 54911...)</label>
+            <input name="wp3-number" class="form-control" type="number" value="%wp3-number%">
+          </div>
+          <div class="form-group">
+            <label for="wp3-apikey">API Key</label>
+            <input name="wp3-apikey" class="form-control" type="text" value="%wp3-apikey%">
+          </div>
+          <button id="wp3-test" type="button" class="btn btn-info btn-block">Probar</button>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button name="submit" type="submit" class="btn btn-primary btn-block mt-4">Guardar Cambios</button>
+    </form>
+    
+    <footer class="text-center mt-4">
+      <p>&copy; 2024 Andres Sukanec</p>
+    </footer>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
