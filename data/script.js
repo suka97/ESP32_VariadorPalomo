@@ -1,5 +1,14 @@
+function turnWhatsAppSpinner(wp_index, state) {
+    const button = document.getElementById('wp'+wp_index+'-test');
+    const spinner = button.querySelector('.spinner-border');
+    spinner.style.display = (state) ? 'inline-block' : 'none'; 
+    button.disabled = state; 
+}
+
 
 function testWhatsAppSettings(wp_index) {
+    turnWhatsAppSpinner(wp_index, true);
+
     var wpNumber = document.querySelector('input[name="wp'+wp_index+'-number"]').value;
     var wpApiKey = document.querySelector('input[name="wp'+wp_index+'-apikey"]').value;
 
@@ -9,14 +18,16 @@ function testWhatsAppSettings(wp_index) {
         , true);
   
     xhr.onload = function() {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        alert('Mensaje enviado correctamente');
-      } else {
-        alert('Error al enviar el mensaje');
-      }
+        turnWhatsAppSpinner(wp_index, false);
+        if (xhr.status >= 200 && xhr.status < 300) {
+            alert('Mensaje enviado correctamente');
+        } else {
+            alert('Error al enviar el mensaje');
+        }
     };
   
     xhr.onerror = function() {
+        turnWhatsAppSpinner(wp_index, false);
         alert('Error al enviar el mensaje');
     };
   

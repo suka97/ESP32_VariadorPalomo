@@ -6,9 +6,8 @@
   <title>ESP32 Web Server</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" type="text/css" href="style.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="script.js"></script>
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+  <script src="lib/jquery.min.js"></script>
 </head>
 <body>
 
@@ -25,7 +24,7 @@
         <div class="card-header bg-primary text-white">
           Configuración WIFI
         </div>
-        <div class="card text-center">
+        <div class="text-center card-body">
           
           <div class="form-group">
             <label for="wifi_ssid">WIFI SSID</label>
@@ -102,7 +101,7 @@
         <div class="card-header bg-secondary text-white">
           Contacto WhatsApp 0
         </div>
-        <div class="card text-center">
+        <div class="card-body text-center">
           <div class="form-check mb-2">
             <input name="wp0-enabled" class="form-check-input" type="checkbox" value="1" %wp0-enabled%>
             <label class="form-check-label" for="wp0-enabled">ENABLED</label>
@@ -115,7 +114,10 @@
             <label for="wp0-apikey">API Key</label>
             <input name="wp0-apikey" class="form-control" type="text" value="%wp0-apikey%">
           </div>
-          <button id="wp0-test" type="button" class="btn btn-info btn-block">Probar</button>
+          <button id="wp0-test" type="button" class="btn btn-info">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+            Probar
+          </button>
         </div>
       </div>
 
@@ -124,7 +126,7 @@
         <div class="card-header bg-secondary text-white">
           Contacto WhatsApp 1
         </div>
-        <div class="card text-center">
+        <div class="card-body text-center">
           <div class="form-check mb-2">
             <input name="wp1-enabled" class="form-check-input" type="checkbox" value="1" %wp1-enabled%>
             <label class="form-check-label" for="wp1-enabled">ENABLED</label>
@@ -137,7 +139,7 @@
             <label for="wp1-apikey">API Key</label>
             <input name="wp1-apikey" class="form-control" type="text" value="%wp1-apikey%">
           </div>
-          <button id="wp1-test" type="button" class="btn btn-info btn-block">Probar</button>
+          <button id="wp1-test" type="button" class="btn btn-info">Probar</button>
         </div>
       </div>
 
@@ -146,7 +148,7 @@
         <div class="card-header bg-secondary text-white">
           Contacto WhatsApp 2
         </div>
-        <div class="card text-center">
+        <div class="card-body text-center">
           <div class="form-check mb-2">
             <input name="wp2-enabled" class="form-check-input" type="checkbox" value="1" %wp2-enabled%>
             <label class="form-check-label" for="wp2-enabled">ENABLED</label>
@@ -159,7 +161,7 @@
             <label for="wp2-apikey">API Key</label>
             <input name="wp2-apikey" class="form-control" type="text" value="%wp2-apikey%">
           </div>
-          <button id="wp2-test" type="button" class="btn btn-info btn-block">Probar</button>
+          <button id="wp2-test" type="button" class="btn btn-info">Probar</button>
         </div>
       </div>
 
@@ -168,7 +170,7 @@
         <div class="card-header bg-secondary text-white">
           Contacto WhatsApp 3
         </div>
-        <div class="card text-center">
+        <div class="card-body text-center">
           <div class="form-check mb-2">
             <input name="wp3-enabled" class="form-check-input" type="checkbox" value="1" %wp3-enabled%>
             <label class="form-check-label" for="wp3-enabled">ENABLED</label>
@@ -181,7 +183,7 @@
             <label for="wp3-apikey">API Key</label>
             <input name="wp3-apikey" class="form-control" type="text" value="%wp3-apikey%">
           </div>
-          <button id="wp3-test" type="button" class="btn btn-info btn-block">Probar</button>
+          <button id="wp3-test" type="button" class="btn btn-info">Probar</button>
         </div>
       </div>
 
@@ -194,7 +196,8 @@
     </footer>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  {# <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> #}
+  {# <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script> #}
+  <script src="script.js"></script>
 </body>
 </html>

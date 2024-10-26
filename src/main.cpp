@@ -122,6 +122,12 @@ void setup() {
         esp_err_t res = http_callMeBot_send(phone, apikey, "Test message", false);
         request->send( (res == ESP_OK) ? 200 : 500 );
     });
+    server.on("/lib/jquery.min.js", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(SPIFFS, "/lib/jquery.min.js", "text/javascript");
+    }); 
+    server.on("/lib/bootstrap.min.css", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(SPIFFS, "/lib/bootstrap.min.css", "text/css");
+    });
     server.on("/save", HTTP_GET, [](AsyncWebServerRequest *request){
         EEPROM_Settings new_sett;
             strcpy(new_sett.board_id, settings.board_id);
