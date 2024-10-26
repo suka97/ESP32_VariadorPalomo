@@ -49,7 +49,7 @@ bool connectToWifi(const char* ssid, const char* password) {
     int retries = 0;
     while (WiFi.status() != WL_CONNECTED && retries < 30) {
         retries++;
-        Serial.print(".");
+        Serial.print("."); digitalWrite(PIN_LED, !digitalRead(PIN_LED));
         delay(500);
     }
     return WiFi.status() == WL_CONNECTED;

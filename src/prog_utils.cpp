@@ -54,3 +54,43 @@ void handleResetButton() {
         }
     }
 }
+
+
+void sendDoorbellNotifications(String message) {
+    message.replace(" ", "+");
+    for ( uint8_t i=0 ; i<WP_PROFILES_MAX ; i++ ) {
+        if ( settings.wp_profiles[i].enabled ) {
+            http_callMeBot_send(settings.wp_profiles[i].number, settings.wp_profiles[i].apikey, message);
+        }
+    }
+}
+
+
+void handleDoorbell() {
+    static uint32_t last_pressed = 0;
+
+    // check if pressed for a valid time
+    uint32_t start_time = millis();
+    // while ( millis()-start_time < 50 ) {
+        if ( digitalRead(PIN_IN_DOORBELL) != LVL_IN_DOORBELL ) return;
+    // }
+
+    // toggle LED
+    digitalWrite(PIN_LED, !digitalRead(PIN_LED));
+
+    Serial.println("Doorbell pressed");
+
+    // avoid too consecutive notifications
+    if ( millis()-last_pressed > 5000 ) 
+        sendDoorbellNotifications("Tocaron el timbre");
+
+    // wait for release
+    Serial.println("Waiting for doorbell release");
+    while(digitalRead(PIN_IN_DOORBELL) == LVL_IN_DOORBELL);
+    Serial.println("Doorbell released\n");
+
+    // toggle back LED
+    digitalWrite(PIN_LED, !digitalRead(PIN_LED));
+
+    last_pressed = millis();
+}

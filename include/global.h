@@ -9,6 +9,7 @@
 #include <SPIFFS.h>
 #include "time.h"
 #include <LiquidCrystal.h>
+#include <HTTPClient.h>
 
 #include "pinout.h"
 #include "wifi_utils.h"
@@ -17,6 +18,7 @@
 #include "prog_utils.h"
 #include "lcd_utils.h"
 #include "io_utils.h"
+#include "http_utils.h"
 
 #define EEPROM_SIZE 512
 

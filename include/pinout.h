@@ -8,8 +8,11 @@
 #define PIN_LCD_D6 19
 #define PIN_LCD_D7 21
 
-#define PIN_IN_DOORBELL  14
-#define LVL_IN_DOORBELL HIGH
+#define PIN_LED 2
+#define LVL_LED_ON HIGH
+
+#define PIN_IN_DOORBELL  15
+#define LVL_IN_DOORBELL LOW
 
 #define PIN_RESET 0     // builtin-BOOT button
 #define LVL_RESET_PRESSED LOW

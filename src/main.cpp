@@ -6,7 +6,7 @@ const uint32_t RESET_TIME = 10000;
 const uint32_t NOWIFI_REBOOT_DELAY = 60000*1;   // 1 min
 
 const char* BOARD_ID = "WifiDoorbell";
-const uint8_t VERSION = 1;
+const uint8_t VERSION = 2;
 
 const char* AP_SSID = "WifiDoorbell";
 const char* AP_PWD = "12345678";
@@ -27,6 +27,7 @@ void setup() {
     // IO init
     pinMode(PIN_RESET, INPUT_PULLUP);
     pinMode(PIN_IN_DOORBELL, INPUT_PULLUP);
+    pinMode(PIN_LED, OUTPUT); digitalWrite(PIN_LED, !LVL_LED_ON);
 
     // LCD init
     lcd.begin(16, 2);
@@ -53,15 +54,8 @@ void setup() {
     handleResetButton();
 
     // Wifi init
-    if( settings.wifi_ap ) {
-        Serial.println("Starting AP...");
-        lcd_print("Starting", "AP...");
-        WiFi.softAP(AP_SSID, AP_PWD);
-        IPAddress IP = WiFi.softAPIP();
-        Serial.print("AP IP address: ");
-        Serial.println(IP);
-        lcd_print("AP IP address:", IP.toString()); delay(PRINT_DELAY);
-    } else {
+    bool connection_error = false;
+    if( !settings.wifi_ap ) {
         Serial.println("WIFI_SSID: " + String(settings.wifi_ssid));
         lcd_print("Wifi:", settings.wifi_ssid); delay(PRINT_DELAY);
         if ( !settings.wifi_dhcp ) {
@@ -79,6 +73,7 @@ void setup() {
         Serial.println("Connecting to WiFi...");
         lcd_print("Connecting", "to WiFi...");
         bool connected = connectToWifi(settings.wifi_ssid, settings.wifi_pass);
+        digitalWrite(PIN_LED, (connected) ? LVL_LED_ON : !LVL_LED_ON);
         if (connected) {
             wifi_connected = true;
             Serial.println("Connected to WiFi with IP address: " + WiFi.localIP().toString());
@@ -86,21 +81,27 @@ void setup() {
         } else {
             Serial.println("Failed to connect to WiFi");
             lcd_print("Failed to", "connect to WiFi"); delay(PRINT_DELAY*2);
-
-            // modo  default
-            lcd_print("", "5min reinicio");
-            delay(NOWIFI_REBOOT_DELAY);
-            ESP.restart();
+            connection_error = true;
         }
     }
+    // Wifi AP
+    if ( !wifi_connected ) {
+        Serial.println("Starting AP...");
+        lcd_print("Starting", "AP...");
+        WiFi.softAP(AP_SSID, AP_PWD);
+        IPAddress IP = WiFi.softAPIP();
+        Serial.print("AP IP address: ");
+        Serial.println(IP);
+        lcd_print("AP IP address:", IP.toString()); delay(PRINT_DELAY);
+    } 
 
     // NTP init
-    if ( wifi_connected ) {
-        Serial.println("NTP server: " + String(settings.wifi_ntp));
-        lcd_print("NTP server:", settings.wifi_ntp); delay(PRINT_DELAY);
-        configTime(-10800, 0, settings.wifi_ntp);
-        syncLocalTime();
-    }
+    // if ( wifi_connected ) {
+    //     Serial.println("NTP server: " + String(settings.wifi_ntp));
+    //     lcd_print("NTP server:", settings.wifi_ntp); delay(PRINT_DELAY);
+    //     configTime(-10800, 0, settings.wifi_ntp);
+    //     syncLocalTime();
+    // }
 
     // Webserver init
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -108,6 +109,18 @@ void setup() {
     });
     server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request){
         request->send(SPIFFS, "/style.css", "text/css");
+    });
+    server.on("/script.js", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(SPIFFS, "/script.js", "text/javascript");
+    });
+    server.on("/test", HTTP_GET, [](AsyncWebServerRequest *request){
+        Serial.print("[Test request] ");
+        String phone = request->getParam("phone")->value();
+        String apikey = request->getParam("apikey")->value();
+        Serial.println("number: " + phone + ", apikey: " + apikey);
+
+        esp_err_t res = http_callMeBot_send(phone, apikey, "Test message", false);
+        request->send( (res == ESP_OK) ? 200 : 500 );
     });
     server.on("/save", HTTP_GET, [](AsyncWebServerRequest *request){
         EEPROM_Settings new_sett;
@@ -146,6 +159,18 @@ void setup() {
         ESP.restart();
     });
     server.begin();
+
+    // Wifi Connection Error
+    if ( connection_error ) {
+        Serial.println("Rebooting in x minutes...");
+        delay(NOWIFI_REBOOT_DELAY);
+        ESP.restart();
+    }
+
+    // Notify Boot
+    if ( wifi_connected ) {
+        sendDoorbellNotifications("WifiDoorbell iniciado con IP: " + WiFi.localIP().toString());
+    }
 }
 
 
@@ -157,17 +182,15 @@ void loop() {
 
     handleResetButton();
 
-    if ( millis()-refresh_time > REFRESH_TIME ) {
-        refresh_time = millis();
-        getLocalTime(&timeinfo);
-    }
+    // if ( millis()-refresh_time > REFRESH_TIME ) {
+    //     refresh_time = millis();
+    //     getLocalTime(&timeinfo);
+    // }
 
-    if ( digitalRead(PIN_IN_DOORBELL) == LVL_IN_DOORBELL ) {
-        Serial.println("Doorbell pressed");
-    }
+    handleDoorbell();
 
-    if ( millis()-refresh_screen > REFRESH_SCREEN ) {
-        refresh_screen = millis();
-        lcd_screen1();
-    }
+    // if ( millis()-refresh_screen > REFRESH_SCREEN ) {
+    //     refresh_screen = millis();
+    //     lcd_screen1();
+    // }
 }

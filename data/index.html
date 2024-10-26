@@ -62,11 +62,13 @@
             <label for="wifi_dns">WIFI DNS</label></div>
           <div class="input-tab">
             <input name="wifi_dns" class="input-field" type="text" value="%wifi_dns%" placeholder="" required></div>
-            
-        <div class="labels">
-          <label for="wifi_ntp">NTP SERVER</label></div>
-        <div class="input-tab">
-          <input name="wifi_ntp" class="input-field" type="text" value="%wifi_ntp%" placeholder="" required></div>
+        
+        <div style="display: none;">
+          <div class="labels">
+            <label for="wifi_ntp">NTP SERVER</label></div>
+          <div class="input-tab">
+            <input name="wifi_ntp" class="input-field" type="text" value="%wifi_ntp%" placeholder="" required></div>
+        </div>
         
         </div>
         <!-- ############################## -->
@@ -76,7 +78,7 @@
         <!-- ########## CallMeBot Explanation ########## -->
         <div class="containernote">
           <p>Para poder usar el BOT hay que <a href="https://wa.me/34684728023?text=I%20allow%20callmebot%20to%20send%20me%20messages" target="_blank">escribirle un mensaje primero</a></p>
-          <p>El BOT contestara con el API Key a usar para el numero con el que se le habló</p>
+          <p>El BOT contestara con el API Key a usar para el numero con el que se le hablo</p>
         </div>
 
 
@@ -96,13 +98,17 @@
           <div class="input-tab">
             <input name="wp0-number" class="input-field" type="number" value="%wp0-number%" placeholder="" ></div>
         
-            <div class="labels">
-              <label for="wp0-apikey">API Key</label></div>
-            <div class="input-tab">
-              <input name="wp0-apikey" class="input-field" type="number" value="%wp0-apikey%" placeholder="" ></div>
-          
+          <div class="labels">
+            <label for="wp0-apikey">API Key</label></div>
+          <div class="input-tab">
+            <input name="wp0-apikey" class="input-field" type="number" value="%wp0-apikey%" placeholder="" ></div>
+
+          <div class="btn">
+            <button id="wp0-test" type="button">Probar</button>
           </div>
-          <!-- ############################## -->
+          
+        </div>
+        <!-- ############################## -->
 
 
         <br>
@@ -121,10 +127,14 @@
           <div class="input-tab">
             <input name="wp1-number" class="input-field" type="number" value="%wp1-number%" placeholder="" ></div>
         
-            <div class="labels">
-              <label for="wp1-apikey">API Key</label></div>
-            <div class="input-tab">
-              <input name="wp1-apikey" class="input-field" type="number" value="%wp1-apikey%" placeholder="" ></div>
+          <div class="labels">
+            <label for="wp1-apikey">API Key</label></div>
+          <div class="input-tab">
+            <input name="wp1-apikey" class="input-field" type="number" value="%wp1-apikey%" placeholder="" ></div>
+
+          <div class="btn">
+            <button id="wp1-test" type="button">Probar</button>
+          </div>
           
           </div>
           <!-- ############################## -->
@@ -146,10 +156,14 @@
           <div class="input-tab">
             <input name="wp2-number" class="input-field" type="number" value="%wp2-number%" placeholder="" ></div>
         
-            <div class="labels">
-              <label for="wp2-apikey">API Key</label></div>
-            <div class="input-tab">
-              <input name="wp2-apikey" class="input-field" type="number" value="%wp2-apikey%" placeholder="" ></div>
+          <div class="labels">
+            <label for="wp2-apikey">API Key</label></div>
+          <div class="input-tab">
+            <input name="wp2-apikey" class="input-field" type="number" value="%wp2-apikey%" placeholder="" ></div>
+
+          <div class="btn">
+            <button id="wp2-test" type="button">Probar</button>
+          </div>
           
           </div>
           <!-- ############################## -->
@@ -171,10 +185,14 @@
           <div class="input-tab">
             <input name="wp3-number" class="input-field" type="number" value="%wp3-number%" placeholder="" ></div>
         
-            <div class="labels">
-              <label for="wp3-apikey">API Key</label></div>
-            <div class="input-tab">
-              <input name="wp3-apikey" class="input-field" type="number" value="%wp3-apikey%" placeholder="" ></div>
+          <div class="labels">
+            <label for="wp3-apikey">API Key</label></div>
+          <div class="input-tab">
+            <input name="wp3-apikey" class="input-field" type="number" value="%wp3-apikey%" placeholder="" ></div>
+
+          <div class="btn">
+            <button id="wp3-test" type="button">Probar</button>
+          </div>
           
           </div>
           <!-- ############################## -->
@@ -188,9 +206,10 @@
       
   
   <footer>
-        <p>&copy 2023 Andres Sukanec</a></p>
+        <p>&copy 2024 Andres Sukanec</a></p>
   </footer>
   
 
+  <script src="script.js"></script>
 </body>
 </html>

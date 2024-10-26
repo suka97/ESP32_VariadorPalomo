@@ -7,5 +7,7 @@ bool isTimeBetween(struct tm now, struct tm start, struct tm end);
 String getWpHtml(const String& var);
 void wp_getSettings(EEPROM_Settings& sett, AsyncWebServerRequest *request);
 void handleResetButton();
+void sendDoorbellNotifications(String message);
+void handleDoorbell();
 
 #endif
