@@ -14,7 +14,7 @@ esp_err_t http_callMeBot_send(String number, String apikey, String message, bool
         int httpCode = http.GET();
         if (httpCode > 0) {
             Serial.printf("[CallMeBot] HTTP GET... code: %d\n", httpCode);
-            if (httpCode >= 200 && httpCode < 300) {
+            if (httpCode == 200 || httpCode == 210) {       // 210: Too many messages sent, but ok
                 String payload = http.getString();
                 // Serial.println(payload);
                 
