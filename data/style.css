@@ -60,6 +60,15 @@ hr {
   
 }
 
+.containernote {
+  background-color: rgba(146, 160, 22, 0.7);
+  border-radius: 20px;
+  margin: auto;
+  width: 90%;
+  padding: 1em;
+  
+}
+
 #survey-form {
   margin: 0 auto;
   width: 80%;

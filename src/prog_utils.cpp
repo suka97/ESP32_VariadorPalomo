@@ -9,64 +9,29 @@ bool isTimeBetween(struct tm now, struct tm start, struct tm end) {
 }
 
 
-int getProfileForTime(VF_Profile profiles[], struct tm now) {
-    for ( int i=0 ; i<VF_PROFILES_MAX ; i++ ) {
-        if ( !profiles[i].enabled ) continue;
-        if ( isTimeBetween(now, profiles[i].time_start, profiles[i].time_end) ) {
-            return i;
-        }
-    }
-    return -1;
-}
-
-
-String getVfHtml(const String& var) {
+String getWpHtml(const String& var) {
     int profile = var.substring(2, 3).toInt();
-    if ( profile < 0 || profile >= VF_PROFILES_MAX ) return String();
+    if ( profile < 0 || profile >= WP_PROFILES_MAX ) return String();
 
-    String param = var.substring(4); // skip "vfX-"
-    if ( param == "enabled" ) return settings.vf_profiles[profile].enabled ? "checked" : "";
-    if ( param == "rel_temp2vel" ) return String(settings.vf_profiles[profile].rel_temp2vel);
-    if ( param == "vel0" ) return String(settings.vf_profiles[profile].vel0);
-    if ( param == "time_start" ) return time2string(settings.vf_profiles[profile].time_start);
-    if ( param == "time_end" ) return time2string(settings.vf_profiles[profile].time_end);
+    String param = var.substring(4); // skip "wpX-"
+    if ( param == "enabled" ) return settings.wp_profiles[profile].enabled ? "checked" : "";
+    if ( param == "number" ) return settings.wp_profiles[profile].number;
+    if ( param == "apikey" ) return settings.wp_profiles[profile].apikey;
     return String();
 }
 
 
-void vf_getSettings(EEPROM_Settings& sett, AsyncWebServerRequest *request) {
-    for ( uint8_t i=0 ; i<VF_PROFILES_MAX ; i++ ) {
-        sett.vf_profiles[i].enabled = request->hasParam("vf" + String(i) + "-enabled");
-        sett.vf_profiles[i].rel_temp2vel = request->getParam("vf" + String(i) + "-rel_temp2vel")->value().toInt();
-        sett.vf_profiles[i].vel0 = request->getParam("vf" + String(i) + "-vel0")->value().toInt();
-        sett.vf_profiles[i].time_start = string2time(request->getParam("vf" + String(i) + "-time_start")->value());
-        sett.vf_profiles[i].time_end = string2time(request->getParam("vf" + String(i) + "-time_end")->value());
+void wp_getSettings(EEPROM_Settings& sett, AsyncWebServerRequest *request) {
+    for ( uint8_t i=0 ; i<WP_PROFILES_MAX ; i++ ) {
+        sett.wp_profiles[i].enabled = request->hasParam("wp" + String(i) + "-enabled");
+        request->getParam("wp" + String(i) + "-number")->value().toCharArray(sett.wp_profiles[i].number, WP_NUMBER_LEN);
+        request->getParam("wp" + String(i) + "-apikey")->value().toCharArray(sett.wp_profiles[i].apikey, WP_APIKEY_LEN);
 
-        Serial.println("vf" + String(i) + ":");
-        Serial.println("  enabled: " + String(sett.vf_profiles[i].enabled));
-        Serial.println("  rel_temp2vel: " + String(sett.vf_profiles[i].rel_temp2vel));
-        Serial.println("  vel0: " + String(sett.vf_profiles[i].vel0));
-        Serial.println("  time_start: " + time2string(sett.vf_profiles[i].time_start));
-        Serial.println("  time_end: " + time2string(sett.vf_profiles[i].time_end));
+        Serial.println("wp" + String(i) + ":");
+        Serial.println("  enabled: " + String(sett.wp_profiles[i].enabled));
+        Serial.println("  number: " + String(sett.wp_profiles[i].number));
+        Serial.println("  apikey: " + String(sett.wp_profiles[i].apikey));
     }
-}
-
-
-void handleVfProfile() {
-    if ( vf_profile == -1 ) {
-        digitalWrite(PIN_VF_EN, !LVL_VF_EN_ON);
-        vf_pwm = 0;
-        return;
-    }
-    float vel = settings.vf_profiles[vf_profile].vel0 + ds2820_temp * settings.vf_profiles[vf_profile].rel_temp2vel;
-    setVfSpeed(vel);
-    digitalWrite(PIN_VF_EN, LVL_VF_EN_ON);
-}
-
-
-void handleManual() {
-    digitalWrite(PIN_VF_EN, LVL_VF_EN_ON);
-    setVfSpeed( getManualAdc() );
 }
 
 

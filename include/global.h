@@ -9,8 +9,6 @@
 #include <SPIFFS.h>
 #include "time.h"
 #include <LiquidCrystal.h>
-#include <OneWire.h>
-#include <DallasTemperature.h>
 
 #include "pinout.h"
 #include "wifi_utils.h"
@@ -37,12 +35,5 @@ extern AsyncWebServer server;
 extern struct tm timeinfo;
 
 extern LiquidCrystal lcd;
-
-extern OneWire oneWire;
-extern DallasTemperature ds2820;
-extern float ds2820_temp;
-
-extern int vf_profile;
-extern uint32_t vf_pwm;
 
 #endif

@@ -3,12 +3,12 @@
 const uint32_t REFRESH_TIME = 1000;
 const uint32_t REFRESH_SCREEN = 100;
 const uint32_t RESET_TIME = 10000;
-const uint32_t NOWIFI_REBOOT_DELAY = 60000*5;   // 5 min
+const uint32_t NOWIFI_REBOOT_DELAY = 60000*1;   // 1 min
 
-const char* BOARD_ID = "PalomoVF";
-const uint8_t VERSION = 5;
+const char* BOARD_ID = "WifiDoorbell";
+const uint8_t VERSION = 1;
 
-const char* AP_SSID = "ESP32_AP";
+const char* AP_SSID = "WifiDoorbell";
 const char* AP_PWD = "12345678";
 
 EEPROM_Settings settings;
@@ -19,13 +19,6 @@ bool wifi_connected = false;
 LiquidCrystal lcd(PIN_LCD_RS, PIN_LCD_EN, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7);
 uint8_t screen_id = 0;
 
-OneWire oneWire(PIN_DS2820);
-DallasTemperature ds2820(&oneWire);
-float ds2820_temp = 0;
-
-int vf_profile = -1;
-uint32_t vf_pwm = 0;
-
 
 void setup() {
     Serial.begin(115200);
@@ -33,24 +26,11 @@ void setup() {
 
     // IO init
     pinMode(PIN_RESET, INPUT_PULLUP);
-    pinMode(PIN_KEY_ONOFF, INPUT_PULLUP);
-    pinMode(PIN_KEY_AUTO, INPUT_PULLUP);
-    pinMode(PIN_VF_EN, OUTPUT); digitalWrite(PIN_VF_EN, !LVL_VF_EN_ON);
-    // PWM init
-    ledcSetup(PWM_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
-    ledcAttachPin(PIN_VF_V0, PWM_CHANNEL);
+    pinMode(PIN_IN_DOORBELL, INPUT_PULLUP);
 
     // LCD init
     lcd.begin(16, 2);
     lcd_print("Suka"); delay(PRINT_DELAY);
-
-    // DS2820 init
-    ds2820.begin();
-    ds2820_temp = getTemp();
-    if ( ds2820_temp == DEVICE_DISCONNECTED_C ) {
-        Serial.println("DS2820 not found");
-        lcd_print("Error sensor", "temperatura"); delay(PRINT_DELAY);
-    }
 
     // EEPROM Settings init
     EEPROM_Begin();
@@ -108,9 +88,7 @@ void setup() {
             lcd_print("Failed to", "connect to WiFi"); delay(PRINT_DELAY*2);
 
             // modo  default
-            lcd_print("Vel Default", "5min reinicio");
-            vf_profile = 3;
-            handleVfProfile();
+            lcd_print("", "5min reinicio");
             delay(NOWIFI_REBOOT_DELAY);
             ESP.restart();
         }
@@ -157,7 +135,7 @@ void setup() {
         Serial.println("wifi_dns: " + IPAddress(new_sett.wifi_dns).toString());
         Serial.println("wifi_ntp: " + String(new_sett.wifi_ntp));
 
-        vf_getSettings(new_sett, request);
+        wp_getSettings(new_sett, request);
 
         request->send(SPIFFS, "/reset.html", String(), false, htmlProcessor);
         Serial.println("Saving new settings...");
@@ -178,31 +156,14 @@ void loop() {
     if ( !wifi_connected ) return;
 
     handleResetButton();
-    float new_temp = getTemp();
-    if ( new_temp != DEVICE_DISCONNECTED_C ) {
-        ds2820_temp = new_temp;
-    }
 
     if ( millis()-refresh_time > REFRESH_TIME ) {
         refresh_time = millis();
         getLocalTime(&timeinfo);
     }
 
-    if ( digitalRead(PIN_KEY_ONOFF) == LVL_KEY_ONOFF_ON ) {
-        if ( digitalRead(PIN_KEY_AUTO) == LVL_KEY_AUTO_PRESSED ) {
-            int prof_index = getProfileForTime(settings.vf_profiles, timeinfo);
-            if ( prof_index != vf_profile ) {
-                vf_profile = prof_index;
-                Serial.println("Profile Triggered: " + String(vf_profile));
-            }
-            handleVfProfile();
-        }
-        else {
-            handleManual();
-        }
-    }
-    else {
-        digitalWrite(PIN_VF_EN, !LVL_VF_EN_ON);
+    if ( digitalRead(PIN_IN_DOORBELL) == LVL_IN_DOORBELL ) {
+        Serial.println("Doorbell pressed");
     }
 
     if ( millis()-refresh_screen > REFRESH_SCREEN ) {

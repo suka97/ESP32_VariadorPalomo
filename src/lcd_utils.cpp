@@ -16,30 +16,9 @@ String temp2string(float temp) {
 }
 
 
-String getVfStr() {
-    return String("P") + ( (vf_profile == -1) ? "-" : String(vf_profile) );
-}
-
-
-String getPwmStr() {
-    uint8_t duty_100 = vf_pwm * 100 / PWM_MAX_DUTY;
-    return (duty_100 == 0) ? "OFF " : (String(duty_100) + "%");
-}
-
-
 void lcd_screen1() {
-    String row1 = time2string(timeinfo) + "    " + temp2string(ds2820_temp);
-    String row2;
-    if ( digitalRead(PIN_KEY_ONOFF) != LVL_KEY_ONOFF_ON )
-        row2 = "   OFF   ";
-    else {
-        row2 = getPwmStr();
-        if ( digitalRead(PIN_KEY_AUTO) == LVL_KEY_AUTO_PRESSED )
-            row2 += "          " + getVfStr();
-        else 
-            row2 += "       MANUAL";
-    }
-
+    String row1 = "";
+    String row2 = "";
     lcd_print(row1, row2);
 }
 

@@ -56,18 +56,7 @@ bool connectToWifi(const char* ssid, const char* password) {
 }
 
 
-String getModeStr() {
-    if ( digitalRead(PIN_KEY_ONOFF) != LVL_KEY_ONOFF_ON ) return String("OFF");
-    if ( digitalRead(PIN_KEY_AUTO) == LVL_KEY_AUTO_PRESSED ) return String("AUTO");
-    return String("MANUAL");
-}
-
-
 String htmlProcessor(const String& var){
-    if ( var == "curr_temp" ) return String(ds2820_temp);
-    if ( var == "curr_mode" ) return getModeStr();
-    if ( var == "curr_vel" ) return String(vf_pwm * 100 / PWM_MAX_DUTY);
-
     if ( var == "wifi_ssid" ) return settings.wifi_ssid;
     if ( var == "wifi_pass" ) return settings.wifi_pass;
     if ( var == "wifi_ap" ) return settings.wifi_ap ? "checked" : "";
@@ -77,6 +66,6 @@ String htmlProcessor(const String& var){
     if ( var == "wifi_subnet" ) return IPAddress(settings.wifi_subnet).toString();
     if ( var == "wifi_dns" ) return IPAddress(settings.wifi_dns).toString();
     if ( var == "wifi_ntp" ) return settings.wifi_ntp;
-    if ( var.startsWith("vf") ) return getVfHtml(var);
+    if ( var.startsWith("wp") ) return getWpHtml(var);
     return String();
 }

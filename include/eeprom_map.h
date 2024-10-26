@@ -1,20 +1,21 @@
 #ifndef EEPROM_MAP_H
 #define EEPROM_MAP_H
 
-#define BOARD_ID_MAX_LENGTH 10
+#define BOARD_ID_MAX_LENGTH 20
 #define SSID_MAX_LENGTH 32
 #define PASSWORD_MAX_LENGTH 32
 #define NTP_MAX_LENGTH 32
 #define IP_MAX_CHAR_LENGTH 16
-#define VF_PROFILES_MAX 4
+#define WP_PROFILES_MAX 1
 
-struct VF_Profile
+#define WP_NUMBER_LEN 20
+#define WP_APIKEY_LEN 10
+
+struct WP_Profile
 {
     bool enabled;
-    float rel_temp2vel;
-    float vel0;
-    struct tm time_start;
-    struct tm time_end;
+    char number[WP_NUMBER_LEN];
+    char apikey[WP_APIKEY_LEN];
 };
 
 
@@ -33,7 +34,7 @@ struct EEPROM_Settings
     uint8_t wifi_dns[4];
     char wifi_ntp[NTP_MAX_LENGTH];
 
-    VF_Profile vf_profiles[VF_PROFILES_MAX];
+    WP_Profile wp_profiles[WP_PROFILES_MAX];
 };
 
 #endif

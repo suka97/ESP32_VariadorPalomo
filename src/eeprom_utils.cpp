@@ -40,14 +40,10 @@ void EEPROM_CreateSettings() {
     fillIP(settings.wifi_dns, 8, 8, 8, 8);
     strcpy(settings.wifi_ntp, "time.google.com");
     
-    for ( uint8_t i=0 ; i<VF_PROFILES_MAX ; i++ ) {
-        settings.vf_profiles[i].enabled = false;
-        settings.vf_profiles[i].rel_temp2vel = 0;
-        settings.vf_profiles[i].vel0 = 0;
-        settings.vf_profiles[i].time_start.tm_hour = 0;
-        settings.vf_profiles[i].time_start.tm_min = 0;
-        settings.vf_profiles[i].time_end.tm_hour = 0;
-        settings.vf_profiles[i].time_end.tm_min = 0;
+    for ( uint8_t i=0 ; i<WP_PROFILES_MAX ; i++ ) {
+        settings.wp_profiles[i].enabled = false;
+        strcpy(settings.wp_profiles[i].number, "");
+        strcpy(settings.wp_profiles[i].apikey, "");
     }
 
     EEPROM_WriteSettings(settings);
