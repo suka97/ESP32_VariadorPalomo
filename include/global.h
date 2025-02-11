@@ -21,6 +21,7 @@
 #include "http_utils.h"
 
 #define EEPROM_SIZE 512
+#define TELEGRAM_TOKEN      "8076586992:AAFrUk5gwQyQ5KRRNgkKC4MVktQBDD2Ai1Q"
 
 extern const uint32_t REFRESH_TIME;
 extern const uint32_t REFRESH_SCREEN;

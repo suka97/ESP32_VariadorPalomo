@@ -60,7 +60,8 @@ void sendDoorbellNotifications(String message) {
     message.replace(" ", "+");
     for ( uint8_t i=0 ; i<WP_PROFILES_MAX ; i++ ) {
         if ( settings.wp_profiles[i].enabled ) {
-            http_callMeBot_send(settings.wp_profiles[i].number, settings.wp_profiles[i].apikey, message);
+            // http_callMeBot_send(settings.wp_profiles[i].number, settings.wp_profiles[i].apikey, message);
+            http_telegram_send(settings.wp_profiles[i].number, TELEGRAM_TOKEN, message);
         }
     }
 }
