@@ -6,7 +6,7 @@ const uint32_t RESET_TIME = 10000;
 const uint32_t NOWIFI_REBOOT_DELAY = 60000*1;   // 1 min
 
 const char* BOARD_ID = "WifiDoorbell";
-const uint8_t VERSION = 2;
+const uint8_t VERSION = 3;
 
 const char* AP_SSID = "WifiDoorbell";
 const char* AP_PWD = "12345678";
@@ -119,7 +119,8 @@ void setup() {
         String apikey = request->getParam("apikey")->value();
         Serial.println("number: " + phone + ", apikey: " + apikey);
 
-        esp_err_t res = http_callMeBot_send(phone, apikey, "Test message", false);
+        // esp_err_t res = http_callMeBot_send(phone, apikey, "Test message", false);
+        esp_err_t res = http_telegram_send(phone, TELEGRAM_TOKEN, "Test message", true);
         request->send( (res == ESP_OK) ? 200 : 500 );
     });
     server.on("/lib/jquery.min.js", HTTP_GET, [](AsyncWebServerRequest *request){
